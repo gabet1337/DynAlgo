@@ -1,0 +1,77 @@
+\documentclass[a4paper,oneside,article,11pt]{memoir}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\newtheorem*{toprove}{At bevise}
+
+% This font looks so good.
+\usepackage[sc]{mathpazo}
+
+% Typesetting pseudo-code
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{multirow}
+% Code comments like [CLRS]
+\renewcommand{\algorithmiccomment}[1]{\makebox[5cm][l]{$\triangleright$ \textit{#1}}}
+\usepackage{framed,graphicx,xcolor}
+\usepackage{listings}
+
+\usepackage[font={small,it}]{caption}
+
+% Relative references
+\usepackage{varioref}
+
+\usepackage{tikz}
+
+\bibliographystyle{plain}
+
+\title{Dynamic Algorithms \\ Dynamic Transitive Closure }
+\author{Peter Gabrielsen 20114179 \\
+Christoffer Hansen 20114637}
+\newcounter{qcounter}
+\begin{document}
+
+\maketitle
+
+\chapter{Introduction}
+In this project we look at the dynamic transitive closure problem of a directed unweighted graph $G$.
+
+\begin{itemize}
+\item{\texttt{init($n$)}: $G$ becomes the empty directed graph with vertices $\left\lbrace 0,\dots, n-1\right\rbrace$ and no edges.}
+\item{\texttt{insert($i,j$)}: Inserts an edge from $i$ to $j$ into $G$ (if it is not already contained in $G$).}
+\item{\texttt{delete($i,j$)}: Deletes an edge from $i$ to $j$ from $G$ (if it is contained in $G$).}
+\item{\texttt{transitiveClosure?}: Returns the total number of edges in the transitive closure graphs.}
+\end{itemize}
+
+We are going to implement two dynamic algorithms for this problem. The first, presented in section \ref{chap:fw}, is a trivial solution based on the Floyd-Warshall algorithm for computing all pairs shortest paths. The next solution, presented in \ref{chap:sankowski}, is based on Sankowskis randomized reduction to dynamic matrix adjoint combined with the use of the Sherman-Morrison formula.
+
+The second solution requires us to do arithmetic modulo a prime $p$. We are thus going to describe algorithms for this in time $O(log^2 p)$ in section \ref{chap:prime}.
+
+Finally we are going to experimentally test both algorithms and compare their running time on different inputs interesting to this problem.
+
+
+\chapter{Floyd-Warshall}
+\label{chap:fw}
+
+Floyd-Warshalls 
+
+%algorithm
+\begin{algorithm}[H]
+\caption{\textsc{Floyd-Warshall Transitive Closure}(Graph $G$)}
+\label{alg:fw}
+\begin{algorithmic}[1]
+\FOR{$k \leftarrow 1 $ to $n$}
+	\FOR{$i \leftarrow 1 $ to $n$}
+		\FOR{$j \leftarrow 1 $ to $n$}
+			\STATE{$G_{ij} = G_{ij} \vee (G_{ik} \wedge G_{kj})$}
+		\ENDFOR
+	\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\end{document}
+
+
