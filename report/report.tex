@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 
 \newtheorem*{toprove}{At bevise}
+\newtheorem{lemma}{Lemma}
 
 % This font looks so good.
 \usepackage[sc]{mathpazo}
@@ -125,10 +126,10 @@ Operation & Lazy & Eager \\\hline
 \label{chap:prime}
 In order to achieve the bounds presented in section~\ref{chap:sankowski} we need to be able to do fast arithmetic operations modulo $p$. We used that the operations can be performed in $\mathcal{O}(\log^2(p))$. This is trivially true for all operations except division, since they are simply the normal operation followed by a modulo operation.
 
-We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to compute the modular inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the modular inverse can be computed in $\mathcal{O}(\log^2(p))$. We will compute the modular inverse using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
+We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to compute the modular inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the modular inverse can be computed in $\mathcal{O}(\log^2(p))$. We will compute the modular inverse using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$ since $py = 0$ in the field. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
 
 %algorithm
-\begin{algorithm}[h]
+\begin{algorithm}[H]
 \caption{\textsc{Extended-Euclid}(a,b)}
 \label{alg:extended_euclidean}
 \begin{algorithmic}[1]
@@ -143,7 +144,7 @@ We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to 
 \end{algorithm}
 
 %algorithm
-\begin{algorithm}[h]
+\begin{algorithm}[H]
 \caption{\textsc{Modulo Inverse}(a,b)}
 \label{alg:modinv}
 \begin{algorithmic}[1]
@@ -155,6 +156,48 @@ We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to 
 \ENDIF
 \end{algorithmic}
 \end{algorithm}
+
+We see that the complexity is bounded by the complexity of computing the greatest common divisor in the extended euclidean algorithm.
+
+\subsection{The running time of the Extended Euclidean algorithm}
+The running time of this algorithm is equal to the number of recursive calls we make. The worst case analysis makes use of Fibonacci numbers, since calculating the greatest common divisor of two consecutive Fibonacci numbers will produce the worst case number of recursive calls. The analysis is similar to the one given in~\cite[p.~935-937]{clrs}.
+
+The following lemma gives a condition on the size of the input in order to perform $k \geq 1$ recursive calls.
+
+\begin{lemma}
+\label{lemma:ee-rec}
+If $a > b \geq 1$ and the call to \textsc{Extended-Euclid}(a,b) performs $k \geq 1$ recursive calls, then $a \geq F_{k+2}$ and $b \geq F_{k+1}$.
+\end{lemma}
+\begin{proof}
+The proof is induction on $k$.
+
+The basis of the induction is $k=1$. We must then have that $b \geq 1 = F_2$ and $a > b \Rightarrow a \geq 2 = F_3$. By the construction of Fibonacci numbers we have that $b > (a \mod b)$, which implies that, in each recursive call the first argument is strictly larger than the second.
+
+Now assume that the lemma holds for $k-1$ recursive calls. We are now going to prove that it holds for $k$ recursive calls. We have that $b > 0$ and that \textsc{Extended-Euclid}(a,b) calls \textsc{Extended-Euclid}(b, a mod b) recursively, which by the induction hypothesis makes $k-1$ recursive calls. The induction hypothesis also tells us that $b \geq F_{k+1}$ and $a \mod b \geq F_k$.
+
+We have that:
+\begin{align*}
+b+(a\mod b) &= b + (a-b\lfloor a/b \rfloor) \\
+&\leq a
+\end{align*}
+since $a > b > 0 \Rightarrow \lfloor a/b \rfloor \geq 1$. It now follow that.
+\begin{align*}
+a &\geq b + (a \mod b) \\
+&\geq F_{k+1} + F_k \\
+&= F_{k+2}
+\end{align*}
+\end{proof}
+
+Lamé's theorem follows directly from lemma~\ref{lemma:ee-rec} and says that for any integer $k\geq 1$, if $a > b \geq 1$ and $b < F_{k+1}$, then the number of recursive calls is less than $k$.
+
+It can be shown that the upper bound achieved from Lamé's theorem is the best possible by looking at the call to \textsc{Extended-Euclid}($F_{k+1}$, $F_k$). By induction on $k$ we see that we will need $k-1$ recursive calls.
+The inductive step is as follows:
+\begin{align*}
+\gcd(F_{k+1}, F_k) &= \gcd(F_k, F_{k+1} \mod F_k)\\
+&= \gcd(F_k, F_{k-1})
+\end{align*}
+
+Since $F_k = \Theta(\phi^k)$ where $\phi$ is the golden ratio we have that the number of recursive calls is $\mathcal{O}(\lg_{\phi} b) = \mathcal{O}(\lg b)$.
 
 \end{document}
 
