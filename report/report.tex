@@ -197,8 +197,9 @@ The inductive step is as follows:
 &= \gcd(F_k, F_{k-1})
 \end{align*}
 
-Since $F_k = \Theta(\phi^k)$ where $\phi$ is the golden ratio we have that the number of recursive calls is $\mathcal{O}(\lg_{\phi} b) = \mathcal{O}(\lg b)$.
+Since $F_k = \Theta(\phi^k)$ where $\phi$ is the golden ratio we have that the number of recursive calls is $\mathcal{O}(\lg_{\phi} b) = \mathcal{O}(\lg b)$. We perform a constant number of $\mathcal{O}(\lg p)$ arithmetic operations in each recursive call and we thus achieve a total complexity of $\mathcal{O}(\lg^2 p)$ for division modulo $p$.
 
+\bibliography{references}
 \end{document}
 
 
