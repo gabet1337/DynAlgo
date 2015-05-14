@@ -55,10 +55,44 @@ Finally we are going to experimentally test both algorithms and compare their ru
 \chapter{Floyd-Warshall}
 \label{chap:fw}
 
-Floyd-Warshalls 
+Floyd-Warshalls algorithm is an algorithm for finding all-pairs shortest path in a directed graph. The algorithm in its traditional form uses a bottom-up dynamic programming approach to compute the shortest-path weights. It does so using the following recurrence:
+
+$$
+d_{ij}^{(k)} = \left\{ \begin{array}{ll}
+w_{ij} &\mbox{ if $k=0$} \\
+\min\left(d_{ij}^{(k-1)}, d_{ik}^{(k-1)} + d_{kj}^{(k-1)}\right) &\mbox{ if $k \geq 1$}
+\end{array} \right.
+$$
+
+In the k'th iteration the Floyd-Warshall algorithm considers the shortest path from $i$ to $j$ with intermediate vertices in the set $\left\lbrace 1,2,\dots,k-1\right\rbrace$. It computes the k'th iteration by decomposing the path from $i$ to $j$ into $i \rightsquigarrow k \rightsquigarrow j$. Since $k$ is not an intermediate vertex of the path $i\rightsquigarrow k$ or $k\rightsquigarrow j$ we have that we have already computed the shortest path of these paths and can easily expand our solution using the recurrence.
+
+We are, however, interested in computing the transitive closure of a directed graph and not all-pairs shortest path, but the Floyd-Warshall algorithm can be easily modified to solve this problem.
+
+We do this by assigning a weight of 1 to each edge in our graph. If there's a path from $i$ to $j$ we will have that $d_{ij} < n$ otherwise $d_{ij} = \infty$. Another more efficient and simpler way is to replace the use of arithmetic operations with logical operations $\wedge$ and $\vee$. The k'th iteration computes whether there is a path from $i$ to $j$ by checking if it already exists or if it exists by considering the path $i\rightsquigarrow k\rightsquigarrow j$. By the same argument as before, we have already computed whether a path exists from $i$ to $k$ and $k$ to $j$. The recurrence becomes:
+
+$$
+t_{ij}^{(k)} = \left\{ \begin{array}{ll}
+\left\{
+\begin{array}{ll}
+0 &\mbox{ if $i \neq j $ and $ (i,j)\not\in E$} \\
+1 &\mbox{ if $i = j $ and $ (i,j)\in E$}
+\end{array} 
+\right.
+&\mbox{ if $k=0$} \\
+t_{ij}^{(k-1)} \vee \left(d_{ik}^{(k-1)} \wedge d_{kj}^{(k-1)}\right) &\mbox{ if $k \geq 1$}
+\end{array} \right.
+$$
+
+The algorithm for computing the transitive closure using Floyd-Warshall is repeated in algorithm~\ref{alg:fw}. The complexity of this algorithm is trivially $\mathcal{O}(n^3)$ by the triple \texttt{for} loops.
+
+The complexity of each operation is also quite simple. In the lazy solution we only compute the transitive closure when needed and we can thus do \texttt{insert} and \texttt{delete} in $\mathcal{O}(1)$. \texttt{init} can be done in $\mathcal{O}(1)$ using lazy initialization but our solution simply initializes the adjacency matrix and transitive closure graph upfront using $\mathcal{O}(n^2)$ operations. Finally the transitive closure can be computed in $\mathcal{O}(n^3)$.
+
+Another solution is to eagerly update the transitive closure matrix on each \texttt{insert} and \texttt{delete} giving these operations a complexity of $\mathcal{O}(n^3)$. \texttt{init} has the same complexity as the lazy solution, but we are now able to report number of edges in the transitive closure graph in $\mathcal{O}(1)$.
+
+The complexities are repeated in figure~\ref{fig:fw-comp}.
 
 %algorithm
-\begin{algorithm}[H]
+\begin{algorithm}[h]
 \caption{\textsc{Floyd-Warshall Transitive Closure}(Graph $G$)}
 \label{alg:fw}
 \begin{algorithmic}[1]
@@ -69,6 +103,56 @@ Floyd-Warshalls
 		\ENDFOR
 	\ENDFOR
 \ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\begin{figure}[h]
+\center{
+\begin{tabular}{|c|c|c|}
+\hline
+Operation & Lazy & Eager \\\hline
+\texttt{init} & $\mathcal{O}(1)$ or $\mathcal{O}(n^2)$ & $\mathcal{O}(1)$ or $\mathcal{O}(n^2)$ \\
+\texttt{insert} & $\mathcal{O}(1)$ & $\mathcal{O}(n^3)$ \\
+\texttt{delete} & $\mathcal{O}(1)$ & $\mathcal{O}(n^3)$ \\
+\texttt{transitiveClosure?} & $\mathcal{O}(n^3)$ & $\mathcal{O}(1)$ \\\hline
+\end{tabular}
+}
+\caption{Complexities of each operation for the Floyd-Warshall solution.}
+\label{fig:fw-comp}
+\end{figure}
+
+\chapter{Arithmetic modulo $p$}
+\label{chap:prime}
+In order to achieve the bounds presented in section~\ref{chap:sankowski} we need to be able to do fast arithmetic operations modulo $p$. We used that the operations can be performed in $\mathcal{O}(\log^2(p))$. This is trivially true for all operations except division, since they are simply the normal operation followed by a modulo operation.
+
+We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to compute the modular inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the modular inverse can be computed in $\mathcal{O}(\log^2(p))$. We will compute the modular inverse using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
+
+%algorithm
+\begin{algorithm}[h]
+\caption{\textsc{Extended-Euclid}(a,b)}
+\label{alg:extended_euclidean}
+\begin{algorithmic}[1]
+\IF{$b=0$}
+	\RETURN{$(a,1,0)$}
+\ELSE
+	\STATE{$(d',x',y') = \textsc{Extended-Euclid}(b,\, a \mod b)$}
+	\STATE{$(d,x,y) = (d',y',x'-\lfloor a/b \rfloor y')$}
+	\RETURN{$(d,x,y)$}
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+%algorithm
+\begin{algorithm}[h]
+\caption{\textsc{Modulo Inverse}(a,b)}
+\label{alg:modinv}
+\begin{algorithmic}[1]
+\STATE{$(d,x,y) = \textsc{Extended-Euclid}(a,b)$}
+\IF{$d > 1$}
+	\STATE{No inverse exists}
+\ELSE
+	\RETURN{$x \mod b$}
+\ENDIF
 \end{algorithmic}
 \end{algorithm}
 
