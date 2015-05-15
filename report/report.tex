@@ -49,7 +49,7 @@ In this project we look at the dynamic transitive closure problem of a directed 
 
 We are going to implement two dynamic algorithms for this problem. The first, presented in section \ref{chap:fw}, is a trivial solution based on the Floyd-Warshall algorithm for computing all pairs shortest paths. The next solution, presented in \ref{chap:sankowski}, is based on Sankowskis randomized reduction to dynamic matrix adjoint combined with the use of the Sherman-Morrison formula.
 
-The second solution requires us to do arithmetic modulo a prime $p$. We are thus going to describe algorithms for this in time $O(log^2 p)$ in section \ref{chap:prime}.
+The second solution requires us to do arithmetic modulo a prime $p$. We are thus going to describe algorithms for this in time $O(log^2(p))$ in section \ref{chap:prime}.
 
 Finally we are going to experimentally test both algorithms and compare their running time on different inputs interesting to this problem.
 
@@ -66,11 +66,11 @@ w_{ij} &\mbox{ if $k=0$} \\
 \end{array} \right.
 $$
 
-In the k'th iteration the Floyd-Warshall algorithm considers the shortest path from $i$ to $j$ with intermediate vertices in the set $\left\lbrace 1,2,\dots,k-1\right\rbrace$. It computes the k'th iteration by decomposing the path from $i$ to $j$ into $i \rightsquigarrow k \rightsquigarrow j$. Since $k$ is not an intermediate vertex of the path $i\rightsquigarrow k$ or $k\rightsquigarrow j$ we have that we have already computed the shortest path of these paths and can easily expand our solution using the recurrence.
+In the k'th iteration the Floyd-Warshall algorithm considers the shortest path from $i$ to $j$ with intermediate vertices in the set $\left\lbrace 1,2,\dots,k-1\right\rbrace$. It computes the k'th iteration by decomposing the path from $i$ to $j$ into $i \rightsquigarrow k \rightsquigarrow j$. Since $k$ is not an intermediate vertex of the path $i\rightsquigarrow k$ or $k\rightsquigarrow j$ we satisfy having already computed the shortest path of these paths and can easily expand our solution using the recurrence.
 
 We are, however, interested in computing the transitive closure of a directed graph and not all-pairs shortest path, but the Floyd-Warshall algorithm can be easily modified to solve this problem.
 
-We do this by assigning a weight of 1 to each edge in our graph. If there's a path from $i$ to $j$ we will have that $d_{ij} < n$ otherwise $d_{ij} = \infty$. Another more efficient and simpler way is to replace the use of arithmetic operations with logical operations $\wedge$ and $\vee$. The k'th iteration computes whether there is a path from $i$ to $j$ by checking if it already exists or if it exists by considering the path $i\rightsquigarrow k\rightsquigarrow j$. By the same argument as before, we have already computed whether a path exists from $i$ to $k$ and $k$ to $j$. The recurrence becomes:
+We do this by assigning a weight of 1 to each edge in our graph. If there is a path from $i$ to $j$ we will have that $d_{ij} < n$ otherwise $d_{ij} = \infty$. Another approach, which is both more efficient and simpler, is to replace the use of arithmetic operations with logical operations $\wedge$ and $\vee$. The k'th iteration computes whether there is a path from $i$ to $j$ by checking if it already exists or if it exists by considering the path $i\rightsquigarrow k\rightsquigarrow j$. By the same argument as before, we have already computed whether a path exists from $i$ to $k$ and $k$ to $j$. The recurrence becomes:
 
 $$
 t_{ij}^{(k)} = \left\{ \begin{array}{ll}
@@ -87,9 +87,9 @@ $$
 
 The algorithm for computing the transitive closure using Floyd-Warshall is repeated in algorithm~\ref{alg:fw}. The complexity of this algorithm is trivially $\mathcal{O}(n^3)$ by the triple \texttt{for} loops.
 
-The complexity of each operation is also quite simple. In the lazy solution we only compute the transitive closure when needed and we can thus do \texttt{insert} and \texttt{delete} in $\mathcal{O}(1)$. \texttt{init} can be done in $\mathcal{O}(1)$ using lazy initialization but our solution simply initializes the adjacency matrix and transitive closure graph upfront using $\mathcal{O}(n^2)$ operations. Finally the transitive closure can be computed in $\mathcal{O}(n^3)$.
+The complexity of each operation is also quite simple. In the lazy solution we only compute the transitive closure when needed and we can thus do \texttt{insert} and \texttt{delete} in $\mathcal{O}(1)$. Using lazy initialization \texttt{init} can be done in $\mathcal{O}(1)$ but our solution simply initializes the adjacency matrix and transitive closure graph upfront using $\mathcal{O}(n^2)$ operations. Finally the transitive closure can be computed in $\mathcal{O}(n^3)$.
 
-Another solution is to eagerly update the transitive closure matrix on each \texttt{insert} and \texttt{delete} giving these operations a complexity of $\mathcal{O}(n^3)$. \texttt{init} has the same complexity as the lazy solution, but we are now able to report number of edges in the transitive closure graph in $\mathcal{O}(1)$.
+Another solution is to eagerly update the transitive closure matrix on each \texttt{insert} and \texttt{delete} giving these operations a complexity of $\mathcal{O}(n^3)$. The complexity of \texttt{init} is the same as for the lazy solution, but we are now able to report number of edges in the transitive closure graph in $\mathcal{O}(1)$.
 
 The complexities are repeated in figure~\ref{fig:fw-comp}.
 
@@ -136,11 +136,13 @@ The truly dynamic algorithm we will present is due to Sankowskis randomized redu
 Let $A$ be the adjacency matrix of a graph $G$. There exists a path in $G$ from $i$ to $j$ \textit{iff} $adj(I-A)_{ij}$ as polynomial of entries of $A$ is symbolically not equal to zero.
 \end{thrm}
 
-Assuming $I-A$ is non-singular it trivially follows that $det(I-A) \not = 0$. From the relation $(I-A)^{-1} = \frac{adj(I-A)}{det(I-A)}$ it follows that $(I-A)^{-1}$ could simply be considered as a scaling of $adj(I-A)$ by a scalar corresponding to $\frac{1}{det(I-A)}$. In other words non-zero entries of $adj(I-A)$ is preserved when dividing with $det(I-A)$. We conclude there is a homomorphic relation between Theorem \ref{thrm:sankowski-path} and $(I-A)^{-1}$. %TODO Are we sure we can call this a homomorphic relation?
+Assuming $(I-A)$ is non-singular it trivially follows that $det(I-A) \not = 0$. From the relation $(I-A)^{-1} = \frac{adj(I-A)}{det(I-A)}$ it follows that $(I-A)^{-1}$ could simply be considered as a scaling of $adj(I-A)$ by a scalar corresponding to $\frac{1}{det(I-A)}$. Put in other words, non-zero entries of $adj(I-A)$ is preserved when dividing with $det(I-A)$. We conclude there is a homomorphic relation between Theorem \ref{thrm:sankowski-path} and $(I-A)^{-1}$. %TODO Are we sure we can call this a homomorphic relation?
+
+In order to efficiently compute the inverse of the adjacency matrix we look into the Sherman-Morrisson formula.
 
 \paragraph{Sherman-Morrison formula}
 
-Assume $A$ is an invertible square matrix of size $nxn$ and $u$, $v$ are column vectors of size $nx1$. For now we will assume that $1 + v^T A^{-1} u \not = 0$.
+Assume $A$ is an invertible square matrix of size $n \times n$ and $u$, $v$ are column vectors of size $n \times 1$. %TODO We don't need this assumption: For now we will assume that $1 + v^T A^{-1} u \not = 0$.
 
 From the Sherman-Morrison formula,
 
@@ -155,18 +157,17 @@ one may see that we are provided with a numerical cheap way of computing the inv
 \paragraph{Putting it all together}
 The idea of the algorithm is to combine Sankowskis reduction to dynamic matrix adjoint combined with the Sherman-Morrison formula.
 
-Unfortunately we can not rely on a polynomial of degree $n$ as it could take exponential time to evaluate. In order to come around this issue we pick a prime $p$ and for each variable (i.e. non-zero entry of $A$) we substitute with a uniformly random $r \in \mathbb{Z}_{p} := \mathbb{Z} / p\mathbb{Z}$.
-
+Unfortunately we can not rely on a polynomial of degree $n$ as it could take exponential time to evaluate. In order to come around this issue we choose a prime $p$ and for each variable (i.e. non-zero entry of $A$) we substitute with a uniformly random $r \in \mathbb{Z}_{p} := \mathbb{Z} / p\mathbb{Z}$. Thus, the algorithm becomes:
 
 \begin{itemize}
-\item{\texttt{init($n$)}: Set $A^{-1}$ = $I_n$. Note that $I_n$ is equal to $(I_n)^{-1}$. Also  initialize a matrix $B^{nxn}$ taking uniformly random values from $\mathbb{Z}_p$ in all entries.}
+\item{\texttt{init($n$)}: Set $A^{-1}$ = $I_n$. Note that $I_n$ is equal to $(I_n)^{-1}$. Also  initialize a matrix $B^{n \times n}$ taking uniformly random values from $\mathbb{Z}_p$ in all entries.}
 \item{\texttt{insert($i,j$)}: Let $u = e_i$ be the unit column vector of length $n$ with 1 in entry $i$. Let $v$ be the column vector of length n with all-zeroes expect from entry $j$ that takes it value from $B_{ij}$.
 Use the Sherman-Morrison formula presented in Equation~\ref{eq:ShermanMorrison} to compute the inverse $A^{-1}$.}
-\item{\texttt{delete($i,j$)}: As \texttt{delete($i,j$)} could simply be viewed as the inverse permutation of A with respect to \texttt{insert($i,j$)}, we change the signs in Sherman-Morrison as follows
+\item{\texttt{delete($i,j$)}: As \texttt{delete($i,j$)} could simply be viewed as the inverse permutation of A with respect to \texttt{insert($i,j$)}, we change the signs in the Sherman-Morrison formula as follows
 
 $$(A+uv^T)^{-1} = A^{-1} + \dfrac{A^{-1}uv^TA^{-1}}{1 - v^T A^{-1} u}$$}
 
-Assuming $u$, $v$ on the same form as in \texttt{insert($i,j$)}, we are ensured an inverse permutation of A.
+Assuming $u$, $v$ on the same form as in \texttt{insert($i,j$)}, we are ensured having done an inverse permutation of A with respect to \texttt{insert($i,j$)}.
 
 \item{\texttt{transitiveClosure?}: From Theorem~\ref{thrm:sankowski-path} it follows that we just have to report all non-zero entries of $A^{-1}$.}
 \end{itemize}
@@ -177,15 +178,16 @@ By relying on the substitution of polynomial variables into random numbers, we i
 
 \begin{lemma}
 \label{lma:zippelSchwarz}
-If $p(x_1$,...,$x_m)$ is a non-zero polynomial of degree $d$ with coefficients in a field and $S$ is a subset of the field, then the probability that $p$ evaluates to 0 on a random element $(s_1$,$s_2$...,$s_m) \in S^m$ is at most $d/\mid S \mid$. We call this event false zero.
+If $p(x_1$,...,$x_m)$ is a non-zero polynomial of degree $d$ with coefficients in a field and $S$ is a subset of the field, then the probability that $p$ evaluates to 0 on a random element $(s_1$,$s_2$...,$s_m) \in S^m$ is at most $d/\rvert S \rvert$. We call this event false zero.
 \end{lemma}
 
-As $\mid d \mid \leq n$ we we will get a false zero with probability less than $\frac{n}{p}$. By setting $p > n^2$ we get the desired error probability of $\frac{1}{n}$.
+We are asked to bound the probability of a false answer to $\frac{1}{n}$. As we are substituting all $d$ polynomial variables into random numbers, we are essential evaluating a polynomial of degree 1. From Lemma~\ref{lma:zippelSchwarz} it follows that the probability for a false answer for $\rvert S \rvert = p$ is $\frac{1}{p}$. By setting $p \geq n$ we ensure the desired probability $\frac{1}{n}$ for our algorithm.
+
 
 \begin{itemize}
-\item{\texttt{init($n$)}: Computing the identity matrix of size n can trivially be done in $\mathcal{O}(n^2)$ time and space. Also compute the random matrix $B^{nxn}$ that takes random values from $\mathbb{Z}_p$. It is assumed that we can choose a uniformly random k-bit number in time $\mathcal{O}(k)$. Thus it takes $\mathcal{O}(n^2 log p)$ to initialize $B$. Note that we can use lazy initialization to get a $\mathcal{O}(1)$ running time.}
-\item{\texttt{insert($i,j$)}: The Sherman-Morrison takes $\mathcal{O}(n^2)$ to evaluate. We assume arithmetic operations can be done in $O(\log^2 p)$ per operation in $\mathbb{Z}_p$. This gives a total running time of $\mathcal{O}(n^2 \log^2 p)$.}
-\item{\texttt{delete($i,j$)}: Same analysis as insert(i,j) gives $\mathcal{O}(n^2 \log^2 p)$.}
+\item{\texttt{init($n$)}: Computing the identity matrix of size n can trivially be done in $\mathcal{O}(n^2)$ time and space. We also need to compute the random matrix $B^{n \times n}$ that takes random values from $\mathbb{Z}_p$. It is assumed that we can choose a uniformly random $k$-bit number in time $\mathcal{O}(k)$. Thus it takes $\mathcal{O}(n^2 log(p))$ to initialize $B$. Note that we can use lazy initialization to get an $\mathcal{O}(1)$ running time.}
+\item{\texttt{insert($i,j$)}: The Sherman-Morrison takes $\mathcal{O}(n^2)$ to evaluate. We assume arithmetic operations can be done in $O(\log^2(p))$ per operation in $\mathbb{Z}_p$. This gives a total running time of $\mathcal{O}(n^2 \log^2(p))$.}
+\item{\texttt{delete($i,j$)}: Same analysis as \texttt{insert($i,j$)} gives $\mathcal{O}(n^2 \log^2(p))$.}
 \item{\texttt{transitiveClosure?}: We run through the entire matrix $A^{-1}$ yielding a $\mathcal{O}(n^2)$ traversal to report.}
 \end{itemize}
 
@@ -195,7 +197,7 @@ All results are repeated in~Figure~\ref{fig:truly-comp}.
 \center{
 \begin{tabular}{|c|c|c|}
 \hline
-Operation & Normal initialize & Lazy initialize \\\hline
+Operation & Normal initialization & Lazy initialization \\\hline
 \texttt{init} & $\mathcal{O}(n^2 \log p)$ & $\mathcal{O}(1)$ \\
 \texttt{insert} & $\mathcal{O}(n^2 \log^2 p)$ & $\mathcal{O}(n^2 \log^2 p)$ \\
 \texttt{delete} & $\mathcal{O}(n^2 \log^2 p)$ & $\mathcal{O}(n^2 \log^2 p)$ \\
@@ -209,13 +211,15 @@ Operation & Normal initialize & Lazy initialize \\\hline
 \chapter{Implementation}
 \label{impl}
 
-Using Lemma~\ref{lma:zippelSchwarz} (Zippel and Schwarz) we showed that for $d = n$ we get a false zero probability less than $\frac{n}{p}$. From this it follows that for any $p > n^2$ we can guarantee an error probability less than $\frac{1}{n}$. Setting $p = 2^{31}-1$ we can guarantee an error probability of $\frac{1}{n}$ for all $n \leq \sqrt{p} < \sqrt{p+1} = \sqrt{2^{31}} = 2^{15.5}$.
+We implemented both dynamic algorithms described in section~\ref{chap:fw} and section~\ref{chap:sankowski}. For the prime needed in the algorithm described in section~\ref{chap:sankowski}, we used $p = 2^{31}-1$ as it has the advantage that we do not need double precision arithmetic.
+
+From Lemma~\ref{lma:zippelSchwarz} it follows that the probability for a false answer for $\rvert S \rvert = p$ is $\frac{1}{p}$. By setting $p \geq n$ we previously showed that we can achieve the desired error probability of $\frac{1}{n}$. As $p = 2^{31}-1$ it trivially follows that we are able to answer queries for $n \leq 2^{31}-1$ with the desired error probability.
 
 \chapter{Arithmetic modulo $p$}
 \label{chap:prime}
-In order to achieve the bounds presented in section~\ref{chap:sankowski} we need to be able to do fast arithmetic operations modulo $p$. We used that the operations can be performed in $\mathcal{O}(\log^2(p))$. This is trivially true for all operations except division, since they are simply the normal operation followed by a modulo operation.
+In order to achieve the bounds presented in section~\ref{chap:sankowski} we need to be able to do fast arithmetic operations modulo $p$. There we used that the operations can be performed in $\mathcal{O}(\log^2(p))$. This is trivially true for all operations except division, since they are simply the normal operation followed by a modulo operation.
 
-We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to compute the modular inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the modular inverse can be computed in $\mathcal{O}(\log^2(p))$. We will compute the modular inverse using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$ since $py = 0$ in the field. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
+We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to compute the multiplicative inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the multiplicative inverse can be computed in $\mathcal{O}(\log^2(p))$. We will do this using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$ since $py = 0$ in the field. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
 
 %algorithm
 \begin{algorithm}[H]
@@ -249,7 +253,8 @@ We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to 
 We see that the complexity is bounded by the complexity of computing the greatest common divisor in the extended euclidean algorithm.
 
 \subsection{The running time of the Extended Euclidean algorithm}
-The running time of this algorithm is equal to the number of recursive calls we make. The worst case analysis makes use of Fibonacci numbers, since calculating the greatest common divisor of two consecutive Fibonacci numbers will produce the worst case number of recursive calls. The analysis is similar to the one given in~\cite[p.~935-937]{clrs}.
+The running time of this algorithm is equal to the number of recursive calls we make. The worst case analysis makes use of Fibonacci numbers, since calculating the greatest common divisor of two consecutive Fibonacci numbers will produce the worst case number of recursive calls. %TODO Should we explain why there is a connection between Fibonnaci numbers and worst case number of recurisve calls?
+The analysis is similar to the one given in~\cite[p.~935-937]{clrs}.
 
 The following lemma gives a condition on the size of the input in order to perform $k \geq 1$ recursive calls.
 
@@ -260,7 +265,7 @@ If $a > b \geq 1$ and the call to \textsc{Extended-Euclid}(a,b) performs $k \geq
 \begin{proof}
 The proof is induction on $k$.
 
-The basis of the induction is $k=1$. We must then have that $b \geq 1 = F_2$ and $a > b \Rightarrow a \geq 2 = F_3$. By the construction of Fibonacci numbers we have that $b > (a \mod b)$, which implies that, in each recursive call the first argument is strictly larger than the second.
+The basis of the induction is $k=1$. Then we must have that $b \geq 1 = F_2$ and $a > b \Rightarrow a \geq 2 = F_3$. By the construction of Fibonacci numbers we have that $b > (a \mod b)$, which implies that, in each recursive call the first argument is strictly larger than the second.
 
 Now assume that the lemma holds for $k-1$ recursive calls. We are now going to prove that it holds for $k$ recursive calls. We have that $b > 0$ and that \textsc{Extended-Euclid}(a,b) calls \textsc{Extended-Euclid}(b, a mod b) recursively, which by the induction hypothesis makes $k-1$ recursive calls. The induction hypothesis also tells us that $b \geq F_{k+1}$ and $a \mod b \geq F_k$.
 
@@ -277,9 +282,9 @@ a &\geq b + (a \mod b) \\
 \end{align*}
 \end{proof}
 
-Lamé's theorem follows directly from lemma~\ref{lemma:ee-rec} and says that for any integer $k\geq 1$, if $a > b \geq 1$ and $b < F_{k+1}$, then the number of recursive calls is less than $k$.
+Lamés theorem follows directly from lemma~\ref{lemma:ee-rec} and says that for any integer $k\geq 1$, if $a > b \geq 1$ and $b < F_{k+1}$, then the number of recursive calls is less than $k$.
 
-It can be shown that the upper bound achieved from Lamé's theorem is the best possible by looking at the call to \textsc{Extended-Euclid}($F_{k+1}$, $F_k$). By induction on $k$ we see that we will need $k-1$ recursive calls.
+It can be shown that the upper bound achieved from Lamés theorem is the best possible by looking at the call to \textsc{Extended-Euclid}($F_{k+1}$, $F_k$). By induction on $k$ we see that we will need $k-1$ recursive calls.
 The inductive step is as follows:
 \begin{align*}
 \gcd(F_{k+1}, F_k) &= \gcd(F_k, F_{k+1} \mod F_k)\\
