@@ -141,7 +141,7 @@ Let $A$ be the adjacency matrix of a graph $G$. There exists a path in $G$ from 
 
 Assuming $(I-A)$ is non-singular it trivially follows that $det(I-A) \not = 0$. From the relation $(I-A)^{-1} = \frac{adj(I-A)}{det(I-A)}$ it follows that $(I-A)^{-1}$ could simply be considered as a scaling of $adj(I-A)$ by a scalar corresponding to $\frac{1}{det(I-A)}$. Put in other words, non-zero entries of $adj(I-A)$ is preserved when dividing with $det(I-A)$.
 
-In order to efficiently compute the inverse of the adjacency matrix we look into the Sherman-Morrisson formula.
+In order to efficiently compute the inverse of the adjacency matrix we look into the Sherman-Morrison formula.
 
 \subsection{Sherman-Morrison formula}
 
@@ -178,17 +178,30 @@ We only delete if the edge has previously been inserted.
 \item{\texttt{transitiveClosure?}: From Theorem~\ref{thrm:sankowski-path} it follows that we just have to report all non-zero entries of $A^{-1}$.}
 \end{itemize}
 
-\subsection{Complexity analysis}
+\subsection{Probability of errors}
 
-By relying on the substitution of polynomial variables into random numbers, we introduce the unfortunate event of falsely evaluating to zero. The error of this happening is upper bounded by Zippel and Schwartz in Lemma~\ref{lma:zippelSchwarz}.
+Conceptually we want to store a matrix of unique symbols and then the determinant of this matrix would be a polynomial of degree $\leq n$ in at most $n^2$ variables. The symbolic determinant stored would be symbolically equal to zero iff there is no edge from $i$ to $j$. Since all variables are distinct we have that none of the permutation terms can cancel out, and we would be home-free. We can however not afford to evaluate these polynomials so we have to settle for a random matrix modulo a prime $p$.
+This introduces so-called false zeros. The determinant of the $n \times n$ random matrix can be seen as a polynomial of degree $\leq n$. The probability of a false zero is bounded in the following lemma ~\ref{lma:zippelSchwarz}.
 
 \begin{lemma}
 \label{lma:zippelSchwarz}
 If $p(x_1$,...,$x_m)$ is a non-zero polynomial of degree $d$ with coefficients in a field and $S$ is a subset of the field, then the probability that $p$ evaluates to 0 on a random element $(s_1$,$s_2$...,$s_m) \in S^m$ is at most $d/\rvert S \rvert$. We call this event false zero.
 \end{lemma}
 
-We are asked to bound the probability of a false answer to $\frac{1}{n}$. As we are substituting all $d$ polynomial variables into random numbers, we are essentially evaluating a polynomial of degree 1. From Lemma~\ref{lma:zippelSchwarz} it follows that the probability for a false answer for $\rvert S \rvert = p$ is $\frac{1}{p}$. By setting $p \geq n$ we ensure the desired probability $\frac{1}{n}$ for our algorithm.
+This gives us that the probability that the determinant of a random $n \times n$ matrix, $B$, modulo $p$ is at most $n/p$.
+$$Pr\left[ \det(I-B)  = 0\right] \leq \frac{n}{p} \leq \frac{1}{n^{c-1}}$$
+for a prime $p \geq n^c$.
 
+Since we are effectively calculating the adjugate matrix which consists of $n^2$ determinants of $n-1 \times n-1$ matrices we have that the probability of a false zero in one or more of them is given by:
+
+$$Pr\left[ \bigcup\limits_{i,j} adj_{ij}(I-B) = 0\right] \leq \sum\limits_{i,j}Pr\left[adj_{ij}(I-B) = 0\right] \leq \frac{n^3}{p} \leq \frac{1}{n^{c-3}}$$
+using the union bound.
+
+If we now want to ensure that for $p = 2^{31}-1$ have an error probability of less than $\frac{1}{n}$ then we will have that $n$ can be at most:
+$$\frac{n^3}{2^{31}-1} \leq \frac{1}{n} \Rightarrow n^4 \leq 2^{31}-1 \Rightarrow n \leq (2^{31}-1)^{\frac{1}{4}} \approx 215$$
+
+
+\subsection{Complexity analysis}
 
 \begin{itemize}
 \item{\texttt{init($n$)}: Computing the identity matrix of size $n$ can trivially be done in $\mathcal{O}(n^2)$ time and space. We also need to compute the random matrix $B^{n \times n}$ that takes random values from $\mathbb{Z}_p$. It is assumed that we can choose a uniformly random $k$-bit number in time $\mathcal{O}(k)$. Thus it takes $\mathcal{O}(n^2 log(p))$ to initialize $B$. Note that we can use lazy initialization to get an $\mathcal{O}(1)$ running time.}
@@ -217,9 +230,9 @@ Operation & Normal initialization & Lazy initialization \\\hline
 \chapter{Implementation}
 \label{impl}
 
-We implemented both dynamic algorithms described in section~\ref{chap:fw} and section~\ref{chap:sankowski}. For the prime needed in the algorithm described in section~\ref{chap:sankowski}, we used $p = 2^{31}-1$ as it has the advantage that we do not need double precision arithmetic.
+We implemented both dynamic algorithms described in section~\ref{chap:fw} and section~\ref{chap:sankowski}. For the prime needed in the algorithm described in section~\ref{chap:sankowski}, we used $p = 2^{31}-1$ as it has the advantage that we can do all operations within double precision arithmetic.
 
-From Lemma~\ref{lma:zippelSchwarz} it follows that the probability for a false answer for $\rvert S \rvert = p$ is $\frac{1}{p}$. By setting $p \geq n$ we previously showed that we can achieve the desired error probability of $\frac{1}{n}$. As $p = 2^{31}-1$ it trivially follows that we are able to answer queries for $n \leq 2^{31}-1$ with the desired error probability.
+
 
 \chapter{Arithmetic modulo $p$}
 \label{chap:prime}
