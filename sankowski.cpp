@@ -33,6 +33,7 @@ void remove(int i, int j) {
   if (!A[i][j]) return;
   A[i][j] = 0;
   sherman_morrison(G, i, j, R[i][j], false);
+  R[i][j] = get_random();
 }
 
 int transitive_closure() {
@@ -56,7 +57,7 @@ int main() {
     else if (cmds[i].first == 3)
       remove(cmds[i].second.first, cmds[i].second.second);
     else if (cmds[i].first == 4)
-      cout << transitive_closure() << endl;
+      transitive_closure();
   }
   
   return 0;
