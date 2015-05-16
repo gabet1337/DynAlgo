@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 /*
  * Floyd-Warshall  |    lazy    |     eager      |
  * ---------------------------------------------
@@ -7,9 +13,6 @@
  * trans?           O(n^3)         O(1)
  *  ---------------------------------------------
  */
-
-
-
 
 public class FloydWarshall {
 
@@ -21,34 +24,68 @@ public class FloydWarshall {
 	
 	public static void main(String[] args) {
 		
-		StringBuilder cmds = new StringBuilder();
-		cmds.append("mode lazy\n");
-		cmds.append("init 10\n");
-		cmds.append("insert 2 5\n");
-		cmds.append("delete 5 9\n");
-		cmds.append("trans\n");
+		//args = new String[1];
+    	//args[0] = "D:\\DynAlg\\changefile3.sdx";
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("mode lazy\n");
+		
+		if (args.length != 1)
+        	System.out.println("Usage: Java FloydWarshall <input file>");
+        else {
+            try {
+            	
+            	File fin = new File(args[0]);
+            	
+            	FileInputStream fis = new FileInputStream( fin);
+            	 
+            	//Construct BufferedReader from InputStreamReader
+            	BufferedReader br = new BufferedReader(new InputStreamReader(fis, "UTF8"));
+             
+            	// BOM marker will only appear on the very beginning
+            	br.mark(4);
+            	if ('\ufeff' != br.read()) br.reset(); // not the BOM marker
+            	
+            	String line = null;
+            	while ((line = br.readLine()) != null) {
+            		sb.append(line + '\n');
+            	}
+             
+            	br.close();
+            	
+            } catch (IOException e) {
+                System.out.println("Could not read file " + args[0]);
+                System.out.println(e);
+            }
+        }
+		
+		//StringBuilder cmds = new StringBuilder();
+		//cmds.append("mode lazy\n");
+		//cmds.append("init 10\n");
+		//cmds.append("insert 2 5\n");
+		//cmds.append("delete 5 9\n");
+		//cmds.append("trans\n");
 		
 		
-		FloydWarshall fw = new FloydWarshall(cmds.toString());
-		fw.init(10);
+		FloydWarshall fw = new FloydWarshall(sb.toString());
 		
 	}
 	
 	public FloydWarshall(String cmds) {
-		
+				
 		for (String cmd : cmds.split("\n")) {
 			if (cmd.startsWith("init")) {
-				int n = Integer.parseInt(cmd.substring(5)); 
+				int n = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1,cmd.indexOf(")")));
 				init(n);
 			} else if (cmd.startsWith("insert")) {
-				int i = Integer.parseInt(cmd.substring(cmd.indexOf(" ")+1, cmd.indexOf(" ", cmd.indexOf(" ")+1)));
-				int j = Integer.parseInt(cmd.substring(cmd.indexOf(" ", cmd.indexOf(" ")+1)+1));
+				int i = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1, cmd.indexOf(",")));
+				int j = Integer.parseInt(cmd.substring(cmd.indexOf(",")+1, cmd.indexOf(")")));
 				insert(i, j);
 			} else if (cmd.startsWith("delete")) {
-				int i = Integer.parseInt(cmd.substring(cmd.indexOf(" ")+1, cmd.indexOf(" ", cmd.indexOf(" ")+1)));
-				int j = Integer.parseInt(cmd.substring(cmd.indexOf(" ", cmd.indexOf(" ")+1)+1));
+				int i = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1, cmd.indexOf(",")));
+				int j = Integer.parseInt(cmd.substring(cmd.indexOf(",")+1, cmd.indexOf(")")));
 				delete(i, j);
-			} else if (cmd.startsWith("trans")) {
+			} else if (cmd.startsWith("transitive closure?")) {
 				if (isLazy)
 					transitive_closure();
 				System.out.println(numEdges);
@@ -57,7 +94,7 @@ public class FloydWarshall {
 			} else if (cmd.startsWith("mode eager")) {
 				isLazy = false;
 			} else {
-				throw new UnsupportedOperationException();
+				throw new UnsupportedOperationException(cmd);
 			}
 		}
 		
@@ -85,7 +122,7 @@ public class FloydWarshall {
 			
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < n; j++)
-				if (R[i][j])
+				if (R[i][j] && (i != j))
 					numEdges += 1;
 		
 	}
