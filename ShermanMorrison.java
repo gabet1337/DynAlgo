@@ -13,12 +13,12 @@ public class ShermanMorrison {
 	static long[][] B;
 	
 	static int n = 0;
-	static int p = (int) (2e31-1);
+	static int p = 7; // (int) (2e31-1);
 	
 	public static void main(String[] args) {
 		
 		args = new String[1];
-    	args[0] = "D:\\DynAlg\\changefile100.sdx";
+    	args[0] = "D:\\DynAlg\\changefile3.sdx";
 
 		StringBuilder sb = new StringBuilder();
 		
@@ -118,25 +118,25 @@ public class ShermanMorrison {
 	//A^-1 = A^-1 - ((A^-1 * u)(vT * A^-1) / (1 + vT * A^-1 * u)) = A^-1 - ((a)(b) / (1 + b * u)  
 	public void insert(int i, int j) {
 		
-		//long[][] a = multiply(A_inv, unit(i));
-		long[][] a = multiply22(A_inv, i, 1);
-		//long[][] b = multiply(transpose(unit(j, B[i][j])), A_inv);
-		long[][] b = multiply33(A_inv, j, B[i][j]);
+		long[][] a = multiply(A_inv, unit(i));
+		//long[][] a = multiply22(A_inv, i, 1);
+		long[][] b = multiply(transpose(unit(j, B[i][j])), A_inv);
+		//long[][] b = multiply33(A_inv, j, B[i][j]);
 		
-		//A_inv = subtract(A_inv, multiply(a, b), mod(1 + multiply(b, unit(j))[0][0],p));
-		subtract(A_inv, multiply44(a, b), mod(1 + multiply22(b, j, 1)[0][0],p));
+		A_inv = subtract(A_inv, multiply(a, b), mod(1 + multiply(b, unit(j))[0][0],p));
+		//subtract2(A_inv, multiply44(a, b), mod(1 + multiply22(b, j, 1)[0][0],p));
 		
 	}
 	
 	public void delete(int i, int j) {
 		
-		//long[][] a = multiply(A_inv, neg_unit(i));
-		long[][] a = multiply22(A_inv, i, -1);
-		//long[][] b = multiply(transpose(neg_unit(j, B[i][j])), A_inv);
-		long[][] b = multiply33(A_inv, j, -1 * B[i][j]);
+		long[][] a = multiply(A_inv, neg_unit(i));
+		//long[][] a = multiply22(A_inv, i, -1);
+		long[][] b = multiply(transpose(neg_unit(j, B[i][j])), A_inv);
+		//long[][] b = multiply33(A_inv, j, -1 * B[i][j]);
 		
-		//A_inv = add(A_inv, multiply(a, b), mod(1 - multiply(b, unit(j))[0][0],p));
-		add(A_inv, multiply44(a, b), mod(1 - multiply22(b, j, 1)[0][0],p));
+		A_inv = add(A_inv, multiply(a, b), mod(1 - multiply(b, unit(j))[0][0],p));
+		//add(A_inv, multiply44(a, b), mod(1 - multiply22(b, j, 1)[0][0],p));
 		
 	}
 	
@@ -199,7 +199,19 @@ public class ShermanMorrison {
     }
     
     // return C = A + (alpha * B)
-    public static void add(long[][] A, long[][] B, long alpha) {
+    public static long[][] add(long[][] A, long[][] B, long alpha) {
+    	alpha = mod_inverse(alpha, p); // (int) Math.ceil((double)1 / alpha);
+        int m = A.length;
+        int n = A[0].length;
+        long[][] C = new long[m][n];
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                C[i][j] = mod(A[i][j] + (mod((alpha * B[i][j]),p)), p);
+        return C;
+    }
+    
+    // return C = A + (alpha * B)
+    public static void add2(long[][] A, long[][] B, long alpha) {
     	alpha = mod_inverse(alpha, p); // (int) Math.ceil((double)1 / alpha);
         int m = A.length;
         int n = A[0].length;
@@ -211,7 +223,7 @@ public class ShermanMorrison {
     }
         
     // return C = A - alpha * B
-    public static void subtract(long[][] A, long[][] B, long alpha) {
+    public static void subtract2(long[][] A, long[][] B, long alpha) {
     	alpha = mod_inverse(alpha, p); // (int) Math.ceil((double)1 / alpha);
         int m = A.length;
         int n = A[0].length;
@@ -220,6 +232,18 @@ public class ShermanMorrison {
             for (int j = 0; j < n; j++)
                 A[i][j] = mod(A[i][j] - (mod((alpha * B[i][j]),p)), p);
         //return C;
+    }
+    
+    // return C = A - alpha * B
+    public static long[][] subtract(long[][] A, long[][] B, long alpha) {
+    	alpha = mod_inverse(alpha, p); // (int) Math.ceil((double)1 / alpha);
+        int m = A.length;
+        int n = A[0].length;
+        long[][] C = new long[m][n];
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                C[i][j] = mod(A[i][j] - (mod((alpha * B[i][j]),p)), p);
+        return C;
     }
 
     

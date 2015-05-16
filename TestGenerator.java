@@ -2,13 +2,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 public class TestGenerator {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	
 		if (args.length != 4)
         	System.out.println("Usage: Java TestGenerator <n numInserts numDeletes numTrans>");
         else {
@@ -21,11 +21,13 @@ public class TestGenerator {
 	
 	public static StringBuilder genTest(int n, int inserts, int deletes, int trans) {
 
+		//n--;
+		
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("init(" + n + ")\n");
 		
-		Set<IntPair> s = new HashSet<IntPair>();
+		Set<IntPair> s = new TreeSet<IntPair>();
 		
 		if (deletes > inserts)
 			throw new IllegalStateException("more deletes than inserts");
@@ -40,9 +42,12 @@ public class TestGenerator {
 			
 			if (coin < inserts) { // insert
 				
+				if (s.size() == n*(n-1))
+					continue;
+				
 				IntPair cand = new IntPair(r.nextInt(n), r.nextInt(n));
-				while ( (s.contains(cand)) )
-					cand = new IntPair(r.nextInt(n)-1, r.nextInt(n)-1);
+				while ( (s.contains(cand) || cand.i == cand.j) )
+					cand = new IntPair(r.nextInt(n), r.nextInt(n));
 				s.add(cand);
 				sb.append("insert(" + cand.i + "," + cand.j + ")\n");
 				inserts--;
@@ -80,6 +85,7 @@ public class TestGenerator {
 	StringBuilder sb = new StringBuilder();
 	
 	public static IntPair getRandSetElement(Set<IntPair> s) {
+		
 		
 		int item = r.nextInt(s.size());
 		

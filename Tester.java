@@ -14,8 +14,8 @@ public class Tester {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		//args = new String[1];
-    	//args[0] = "D:\\DynAlg\\changefile3.sdx";
+		args = new String[1];
+    	args[0] = "D:\\DynAlg\\changefile30.sdx";
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -57,7 +57,7 @@ public class Tester {
 		long startTime = System.nanoTime();
 		ByteArrayOutputStream fwBaos = new ByteArrayOutputStream();
 		System.setOut(new PrintStream(fwBaos));
-		//FloydWarshall fw = new FloydWarshall("mode lazy\n" + sb.toString());
+		FloydWarshall fw = new FloydWarshall("mode lazy\n" + sb.toString());
 		long endTime = System.nanoTime();
 		
 		fw_time += (endTime - startTime);
@@ -73,7 +73,7 @@ public class Tester {
 		sm_time += (endTime - startTime);
 		
 		System.setOut(old);
-		
+				
 		if (fwBaos.toString().equals(smBaos.toString()))
 			System.out.print("correct ");
 		else
