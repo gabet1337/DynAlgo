@@ -34,26 +34,27 @@ ll mod_inverse(ll a, ll n) {
   return mod(x,n);
 }
 
+vvll AuvA;
+ll vAu, mod_inv;
 void sherman_morrison(vvll &A, ll row, ll col, ll val, bool is_insert) {
   int n = (int)A.size();
-
+  if (AuvA.size() == 0) AuvA.assign(n,vll(n,0));
   //calc AuvA
-  vvll AuvA(n,vll(n,0));
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++) {
-      AuvA[i][j] = (A[i][row] * ((A[col][j]*val)%MODULO_P))%MODULO_P;
       AuvA[i][j] = (A[i][row] * ((A[col][j]*val)%MODULO_P))%MODULO_P;
     }
   
   //calc 1(+-) vAu
-  ll vAu = (A[col][row] * val * val)%MODULO_P;
+  vAu = (A[col][row] * val * val)%MODULO_P;
+  mod_inv = mod_inverse(vAu,MODULO_P);
   //ll vAu = vA[row] * val;
   if (is_insert) vAu = (vAu+1)%MODULO_P;
   else vAu = (1 - vAu + MODULO_P)%MODULO_P;
 
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++)
-      AuvA[i][j] = (AuvA[i][j] * mod_inverse(vAu,MODULO_P))%MODULO_P;
+      AuvA[i][j] = (AuvA[i][j] * mod_inv)%MODULO_P;
 
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++) {
