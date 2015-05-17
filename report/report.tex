@@ -55,7 +55,7 @@ We are going to implement two dynamic algorithms for this problem. The first, pr
 
 The second solution requires us to do arithmetic modulo a prime $p$. We are thus going to describe algorithms for this in time $\mathcal{O}(\log^2(p))$ in section \ref{chap:prime}.
 
-Finally we are going to experimentally test both algorithms and compare their running time on different inputs interesting to this problem.
+Finally we are going to experimentally test both algorithms and compare their running time on different inputs interesting to this problem in section~\ref{chap:exp}.
 
 
 \chapter{Floyd-Warshall}
@@ -311,6 +311,16 @@ The inductive step is as follows:
 \end{align*}
 
 Since $F_k = \Theta(\phi^k)$ where $\phi$ is the golden ratio we have that the number of recursive calls is $\mathcal{O}(\lg_{\phi} b) = \mathcal{O}(\lg b)$. We perform a constant number of $\mathcal{O}(\lg p)$ arithmetic operations in each recursive call and we thus achieve a total complexity of $\mathcal{O}(\lg^2 p)$ for division modulo $p$.
+
+\chapter{Experiments}
+\label{chap:exp}
+In this section we are going to test our two algorithms on various input to test the correctness and running time under different conditions.
+
+\subsection{Correctness}
+We tested correctness of our algorithms by computing the transitive closure on the given test data and then compare the results using the \texttt{diff} tool. It was however not feasible to compute the transitive closure on the $1000 \times 1000$ matrix using Floyd-Warshall's algorithm, but the algorithms computed the same results on the other given input data.
+
+\subsection{Running time}
+
 
 \bibliography{references}
 \end{document}
