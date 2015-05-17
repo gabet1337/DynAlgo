@@ -1,0 +1,1021 @@
+init(510)
+insert(89,314)
+transitive closure?
+insert(420,311)
+transitive closure?
+insert(75,251)
+transitive closure?
+delete(420,311)
+transitive closure?
+delete(75,251)
+transitive closure?
+delete(89,314)
+transitive closure?
+insert(47,354)
+transitive closure?
+insert(373,414)
+transitive closure?
+delete(47,354)
+transitive closure?
+insert(94,321)
+transitive closure?
+insert(55,159)
+transitive closure?
+delete(373,414)
+transitive closure?
+insert(151,449)
+transitive closure?
+insert(324,268)
+transitive closure?
+delete(151,449)
+transitive closure?
+insert(155,42)
+transitive closure?
+insert(192,129)
+transitive closure?
+insert(150,116)
+transitive closure?
+delete(155,42)
+transitive closure?
+delete(192,129)
+transitive closure?
+insert(507,349)
+transitive closure?
+insert(269,355)
+transitive closure?
+insert(399,508)
+transitive closure?
+insert(294,435)
+transitive closure?
+delete(94,321)
+transitive closure?
+delete(269,355)
+transitive closure?
+delete(150,116)
+transitive closure?
+delete(324,268)
+transitive closure?
+delete(507,349)
+transitive closure?
+delete(399,508)
+transitive closure?
+insert(250,152)
+transitive closure?
+insert(221,94)
+transitive closure?
+delete(294,435)
+transitive closure?
+delete(55,159)
+transitive closure?
+insert(423,371)
+transitive closure?
+insert(215,470)
+transitive closure?
+insert(238,402)
+transitive closure?
+insert(263,504)
+transitive closure?
+delete(215,470)
+transitive closure?
+delete(238,402)
+transitive closure?
+delete(423,371)
+transitive closure?
+delete(250,152)
+transitive closure?
+insert(64,405)
+transitive closure?
+insert(32,161)
+transitive closure?
+delete(64,405)
+transitive closure?
+insert(274,285)
+transitive closure?
+delete(274,285)
+transitive closure?
+delete(221,94)
+transitive closure?
+delete(32,161)
+transitive closure?
+delete(263,504)
+transitive closure?
+insert(91,219)
+transitive closure?
+insert(104,448)
+transitive closure?
+insert(112,475)
+transitive closure?
+delete(104,448)
+transitive closure?
+insert(163,399)
+transitive closure?
+delete(112,475)
+transitive closure?
+insert(239,459)
+transitive closure?
+insert(227,467)
+transitive closure?
+delete(239,459)
+transitive closure?
+delete(163,399)
+transitive closure?
+delete(227,467)
+transitive closure?
+insert(30,71)
+transitive closure?
+delete(30,71)
+transitive closure?
+insert(33,5)
+transitive closure?
+insert(317,283)
+transitive closure?
+insert(109,371)
+transitive closure?
+insert(155,199)
+transitive closure?
+delete(109,371)
+transitive closure?
+insert(317,47)
+transitive closure?
+delete(317,283)
+transitive closure?
+insert(150,280)
+transitive closure?
+insert(54,90)
+transitive closure?
+insert(275,162)
+transitive closure?
+insert(348,342)
+transitive closure?
+delete(348,342)
+transitive closure?
+insert(119,369)
+transitive closure?
+delete(155,199)
+transitive closure?
+delete(33,5)
+transitive closure?
+insert(365,99)
+transitive closure?
+delete(317,47)
+transitive closure?
+insert(56,477)
+transitive closure?
+insert(406,446)
+transitive closure?
+insert(115,366)
+transitive closure?
+insert(359,127)
+transitive closure?
+insert(323,379)
+transitive closure?
+insert(212,6)
+transitive closure?
+delete(212,6)
+transitive closure?
+insert(32,227)
+transitive closure?
+delete(56,477)
+transitive closure?
+delete(323,379)
+transitive closure?
+insert(305,348)
+transitive closure?
+delete(91,219)
+transitive closure?
+insert(482,269)
+transitive closure?
+delete(482,269)
+transitive closure?
+insert(187,389)
+transitive closure?
+delete(187,389)
+transitive closure?
+insert(59,492)
+transitive closure?
+delete(150,280)
+transitive closure?
+insert(273,371)
+transitive closure?
+insert(506,74)
+transitive closure?
+delete(359,127)
+transitive closure?
+insert(177,234)
+transitive closure?
+delete(365,99)
+transitive closure?
+delete(59,492)
+transitive closure?
+delete(32,227)
+transitive closure?
+delete(177,234)
+transitive closure?
+insert(170,494)
+transitive closure?
+insert(349,483)
+transitive closure?
+delete(406,446)
+transitive closure?
+insert(407,13)
+transitive closure?
+insert(474,137)
+transitive closure?
+insert(226,323)
+transitive closure?
+insert(148,454)
+transitive closure?
+insert(429,155)
+transitive closure?
+insert(178,189)
+transitive closure?
+insert(71,262)
+transitive closure?
+insert(487,48)
+transitive closure?
+insert(53,386)
+transitive closure?
+delete(506,74)
+transitive closure?
+delete(305,348)
+transitive closure?
+delete(148,454)
+transitive closure?
+insert(394,136)
+transitive closure?
+insert(408,310)
+transitive closure?
+delete(394,136)
+transitive closure?
+insert(344,284)
+transitive closure?
+delete(226,323)
+transitive closure?
+delete(53,386)
+transitive closure?
+delete(474,137)
+transitive closure?
+delete(349,483)
+transitive closure?
+delete(407,13)
+transitive closure?
+delete(429,155)
+transitive closure?
+insert(344,438)
+transitive closure?
+insert(505,211)
+transitive closure?
+delete(408,310)
+transitive closure?
+insert(134,370)
+transitive closure?
+insert(454,199)
+transitive closure?
+delete(275,162)
+transitive closure?
+delete(178,189)
+transitive closure?
+delete(115,366)
+transitive closure?
+delete(170,494)
+transitive closure?
+insert(202,124)
+transitive closure?
+insert(79,136)
+transitive closure?
+insert(341,381)
+transitive closure?
+delete(487,48)
+transitive closure?
+insert(163,18)
+transitive closure?
+insert(118,225)
+transitive closure?
+insert(101,183)
+transitive closure?
+insert(292,166)
+transitive closure?
+delete(54,90)
+transitive closure?
+insert(484,446)
+transitive closure?
+insert(151,281)
+transitive closure?
+delete(151,281)
+transitive closure?
+delete(71,262)
+transitive closure?
+insert(436,47)
+transitive closure?
+insert(111,299)
+transitive closure?
+delete(163,18)
+transitive closure?
+delete(436,47)
+transitive closure?
+insert(279,67)
+transitive closure?
+insert(190,394)
+transitive closure?
+insert(77,474)
+transitive closure?
+insert(363,360)
+transitive closure?
+delete(341,381)
+transitive closure?
+delete(119,369)
+transitive closure?
+insert(273,400)
+transitive closure?
+delete(363,360)
+transitive closure?
+delete(344,438)
+transitive closure?
+delete(344,284)
+transitive closure?
+insert(445,291)
+transitive closure?
+insert(396,327)
+transitive closure?
+insert(138,213)
+transitive closure?
+insert(454,274)
+transitive closure?
+insert(46,281)
+transitive closure?
+delete(454,274)
+transitive closure?
+delete(273,400)
+transitive closure?
+insert(498,304)
+transitive closure?
+insert(140,3)
+transitive closure?
+delete(77,474)
+transitive closure?
+insert(67,91)
+transitive closure?
+insert(179,89)
+transitive closure?
+insert(407,240)
+transitive closure?
+insert(307,69)
+transitive closure?
+insert(458,426)
+transitive closure?
+insert(504,359)
+transitive closure?
+insert(462,219)
+transitive closure?
+insert(353,402)
+transitive closure?
+insert(321,232)
+transitive closure?
+delete(462,219)
+transitive closure?
+delete(118,225)
+transitive closure?
+insert(379,31)
+transitive closure?
+delete(504,359)
+transitive closure?
+delete(458,426)
+transitive closure?
+insert(441,420)
+transitive closure?
+insert(225,429)
+transitive closure?
+insert(169,385)
+transitive closure?
+insert(303,296)
+transitive closure?
+insert(52,31)
+transitive closure?
+insert(471,225)
+transitive closure?
+insert(160,295)
+transitive closure?
+insert(269,424)
+transitive closure?
+insert(346,444)
+transitive closure?
+insert(413,493)
+transitive closure?
+delete(498,304)
+transitive closure?
+delete(225,429)
+transitive closure?
+delete(279,67)
+transitive closure?
+delete(353,402)
+transitive closure?
+insert(465,157)
+transitive closure?
+insert(323,328)
+transitive closure?
+insert(2,344)
+transitive closure?
+delete(407,240)
+transitive closure?
+delete(465,157)
+transitive closure?
+delete(2,344)
+transitive closure?
+delete(484,446)
+transitive closure?
+delete(323,328)
+transitive closure?
+insert(341,333)
+transitive closure?
+delete(111,299)
+transitive closure?
+delete(67,91)
+transitive closure?
+delete(169,385)
+transitive closure?
+insert(302,350)
+transitive closure?
+delete(52,31)
+transitive closure?
+insert(452,340)
+transitive closure?
+delete(346,444)
+transitive closure?
+insert(243,275)
+transitive closure?
+insert(441,286)
+transitive closure?
+delete(292,166)
+transitive closure?
+insert(202,191)
+transitive closure?
+insert(283,107)
+transitive closure?
+delete(441,420)
+transitive closure?
+insert(259,268)
+transitive closure?
+delete(243,275)
+transitive closure?
+insert(413,81)
+transitive closure?
+insert(191,172)
+transitive closure?
+delete(140,3)
+transitive closure?
+delete(445,291)
+transitive closure?
+delete(191,172)
+transitive closure?
+insert(432,288)
+transitive closure?
+delete(79,136)
+transitive closure?
+insert(198,357)
+transitive closure?
+delete(202,124)
+transitive closure?
+insert(493,92)
+transitive closure?
+insert(86,61)
+transitive closure?
+delete(307,69)
+transitive closure?
+delete(269,424)
+transitive closure?
+insert(46,316)
+transitive closure?
+delete(396,327)
+transitive closure?
+insert(90,394)
+transitive closure?
+insert(462,40)
+transitive closure?
+insert(429,136)
+transitive closure?
+insert(370,151)
+transitive closure?
+insert(441,372)
+transitive closure?
+delete(370,151)
+transitive closure?
+insert(148,45)
+transitive closure?
+delete(148,45)
+transitive closure?
+delete(471,225)
+transitive closure?
+delete(160,295)
+transitive closure?
+delete(179,89)
+transitive closure?
+insert(329,207)
+transitive closure?
+delete(101,183)
+transitive closure?
+delete(441,286)
+transitive closure?
+delete(134,370)
+transitive closure?
+delete(202,191)
+transitive closure?
+delete(303,296)
+transitive closure?
+delete(198,357)
+transitive closure?
+delete(341,333)
+transitive closure?
+insert(340,312)
+transitive closure?
+insert(226,260)
+transitive closure?
+insert(194,276)
+transitive closure?
+insert(236,96)
+transitive closure?
+insert(492,389)
+transitive closure?
+delete(259,268)
+transitive closure?
+delete(505,211)
+transitive closure?
+delete(340,312)
+transitive closure?
+insert(276,297)
+transitive closure?
+insert(75,102)
+transitive closure?
+insert(88,321)
+transitive closure?
+delete(441,372)
+transitive closure?
+insert(320,134)
+transitive closure?
+insert(164,98)
+transitive closure?
+delete(46,281)
+transitive closure?
+insert(460,146)
+transitive closure?
+insert(318,476)
+transitive closure?
+delete(460,146)
+transitive closure?
+insert(272,355)
+transitive closure?
+delete(194,276)
+transitive closure?
+insert(391,71)
+transitive closure?
+insert(213,403)
+transitive closure?
+delete(226,260)
+transitive closure?
+insert(44,352)
+transitive closure?
+insert(292,126)
+transitive closure?
+insert(46,433)
+transitive closure?
+delete(492,389)
+transitive closure?
+delete(213,403)
+transitive closure?
+insert(358,303)
+transitive closure?
+insert(143,456)
+transitive closure?
+insert(226,495)
+transitive closure?
+insert(230,151)
+transitive closure?
+delete(190,394)
+transitive closure?
+insert(154,405)
+transitive closure?
+delete(452,340)
+transitive closure?
+insert(224,68)
+transitive closure?
+delete(272,355)
+transitive closure?
+delete(320,134)
+transitive closure?
+insert(470,362)
+transitive closure?
+delete(454,199)
+transitive closure?
+delete(44,352)
+transitive closure?
+insert(131,116)
+transitive closure?
+delete(88,321)
+transitive closure?
+insert(415,33)
+transitive closure?
+delete(90,394)
+transitive closure?
+delete(224,68)
+transitive closure?
+delete(154,405)
+transitive closure?
+delete(391,71)
+transitive closure?
+insert(293,6)
+transitive closure?
+delete(429,136)
+transitive closure?
+delete(46,316)
+transitive closure?
+delete(276,297)
+transitive closure?
+insert(173,493)
+transitive closure?
+delete(230,151)
+transitive closure?
+insert(49,147)
+transitive closure?
+delete(143,456)
+transitive closure?
+insert(307,108)
+transitive closure?
+delete(236,96)
+transitive closure?
+insert(405,507)
+transitive closure?
+delete(470,362)
+transitive closure?
+insert(385,42)
+transitive closure?
+insert(180,315)
+transitive closure?
+insert(210,357)
+transitive closure?
+delete(49,147)
+transitive closure?
+delete(307,108)
+transitive closure?
+delete(413,81)
+transitive closure?
+delete(164,98)
+transitive closure?
+insert(494,293)
+transitive closure?
+insert(43,481)
+transitive closure?
+delete(493,92)
+transitive closure?
+delete(462,40)
+transitive closure?
+insert(169,301)
+transitive closure?
+insert(122,69)
+transitive closure?
+delete(318,476)
+transitive closure?
+delete(405,507)
+transitive closure?
+delete(75,102)
+transitive closure?
+insert(479,128)
+transitive closure?
+delete(494,293)
+transitive closure?
+delete(329,207)
+transitive closure?
+delete(432,288)
+transitive closure?
+insert(133,458)
+transitive closure?
+delete(379,31)
+transitive closure?
+insert(495,372)
+transitive closure?
+delete(226,495)
+transitive closure?
+delete(169,301)
+transitive closure?
+delete(273,371)
+transitive closure?
+delete(133,458)
+transitive closure?
+delete(283,107)
+transitive closure?
+delete(495,372)
+transitive closure?
+delete(86,61)
+transitive closure?
+delete(131,116)
+transitive closure?
+delete(415,33)
+transitive closure?
+delete(43,481)
+transitive closure?
+delete(385,42)
+transitive closure?
+delete(293,6)
+transitive closure?
+delete(46,433)
+transitive closure?
+insert(279,427)
+transitive closure?
+delete(279,427)
+transitive closure?
+insert(465,477)
+transitive closure?
+delete(210,357)
+transitive closure?
+insert(442,372)
+transitive closure?
+insert(324,216)
+transitive closure?
+delete(321,232)
+transitive closure?
+insert(372,366)
+transitive closure?
+insert(168,66)
+transitive closure?
+insert(27,240)
+transitive closure?
+insert(19,360)
+transitive closure?
+insert(179,140)
+transitive closure?
+insert(14,234)
+transitive closure?
+insert(496,130)
+transitive closure?
+delete(292,126)
+transitive closure?
+delete(122,69)
+transitive closure?
+delete(324,216)
+transitive closure?
+delete(358,303)
+transitive closure?
+delete(138,213)
+transitive closure?
+insert(4,343)
+transitive closure?
+delete(27,240)
+transitive closure?
+delete(496,130)
+transitive closure?
+delete(168,66)
+transitive closure?
+delete(179,140)
+transitive closure?
+delete(465,477)
+transitive closure?
+insert(75,329)
+transitive closure?
+insert(135,67)
+transitive closure?
+delete(372,366)
+transitive closure?
+delete(75,329)
+transitive closure?
+insert(501,318)
+transitive closure?
+insert(203,185)
+transitive closure?
+delete(14,234)
+transitive closure?
+delete(173,493)
+transitive closure?
+insert(243,353)
+transitive closure?
+insert(166,273)
+transitive closure?
+insert(39,218)
+transitive closure?
+insert(261,228)
+transitive closure?
+insert(456,426)
+transitive closure?
+delete(442,372)
+transitive closure?
+delete(243,353)
+transitive closure?
+insert(264,486)
+transitive closure?
+insert(340,107)
+transitive closure?
+delete(166,273)
+transitive closure?
+delete(19,360)
+transitive closure?
+delete(501,318)
+transitive closure?
+insert(304,192)
+transitive closure?
+delete(456,426)
+transitive closure?
+insert(396,159)
+transitive closure?
+insert(186,17)
+transitive closure?
+insert(2,355)
+transitive closure?
+delete(302,350)
+transitive closure?
+insert(348,24)
+transitive closure?
+insert(463,399)
+transitive closure?
+delete(4,343)
+transitive closure?
+insert(353,180)
+transitive closure?
+delete(479,128)
+transitive closure?
+delete(353,180)
+transitive closure?
+delete(413,493)
+transitive closure?
+delete(180,315)
+transitive closure?
+delete(203,185)
+transitive closure?
+delete(304,192)
+transitive closure?
+delete(348,24)
+transitive closure?
+delete(396,159)
+transitive closure?
+delete(39,218)
+transitive closure?
+insert(24,386)
+transitive closure?
+delete(261,228)
+transitive closure?
+delete(340,107)
+transitive closure?
+delete(463,399)
+transitive closure?
+insert(222,167)
+transitive closure?
+delete(135,67)
+transitive closure?
+delete(264,486)
+transitive closure?
+delete(2,355)
+transitive closure?
+delete(186,17)
+transitive closure?
+insert(477,247)
+transitive closure?
+delete(222,167)
+transitive closure?
+delete(24,386)
+transitive closure?
+delete(477,247)
+transitive closure?
+insert(347,13)
+transitive closure?
+delete(347,13)
+transitive closure?
+insert(384,100)
+transitive closure?
+delete(384,100)
+transitive closure?
+insert(488,131)
+transitive closure?
+delete(488,131)
+transitive closure?
+insert(257,274)
+transitive closure?
+insert(40,8)
+transitive closure?
+insert(62,56)
+transitive closure?
+insert(220,51)
+transitive closure?
+insert(493,361)
+transitive closure?
+delete(220,51)
+transitive closure?
+insert(335,338)
+transitive closure?
+delete(257,274)
+transitive closure?
+insert(453,79)
+transitive closure?
+delete(335,338)
+transitive closure?
+delete(40,8)
+transitive closure?
+delete(453,79)
+transitive closure?
+delete(493,361)
+transitive closure?
+insert(397,194)
+transitive closure?
+delete(62,56)
+transitive closure?
+delete(397,194)
+transitive closure?
+insert(388,126)
+transitive closure?
+delete(388,126)
+transitive closure?
+insert(445,272)
+transitive closure?
+insert(227,400)
+transitive closure?
+insert(465,457)
+transitive closure?
+insert(423,258)
+transitive closure?
+insert(57,474)
+transitive closure?
+insert(194,85)
+transitive closure?
+delete(227,400)
+transitive closure?
+delete(465,457)
+transitive closure?
+insert(220,285)
+transitive closure?
+delete(194,85)
+transitive closure?
+insert(220,5)
+transitive closure?
+delete(445,272)
+transitive closure?
+insert(347,93)
+transitive closure?
+delete(220,285)
+transitive closure?
+delete(423,258)
+transitive closure?
+insert(54,447)
+transitive closure?
+delete(347,93)
+transitive closure?
+insert(60,284)
+transitive closure?
+insert(428,424)
+transitive closure?
+insert(117,268)
+transitive closure?
+insert(155,348)
+transitive closure?
+delete(54,447)
+transitive closure?
+delete(220,5)
+transitive closure?
+insert(31,158)
+transitive closure?
+insert(331,410)
+transitive closure?
+delete(57,474)
+transitive closure?
+insert(233,319)
+transitive closure?
+insert(428,130)
+transitive closure?
+insert(159,428)
+transitive closure?
+delete(159,428)
+transitive closure?
+insert(386,189)
+transitive closure?
+delete(428,424)
+transitive closure?
+delete(428,130)
+transitive closure?
+delete(31,158)
+transitive closure?
+delete(386,189)
+transitive closure?
+delete(117,268)
+transitive closure?
+delete(233,319)
+transitive closure?
+insert(144,374)
+transitive closure?
+delete(60,284)
+transitive closure?
+insert(504,232)
+transitive closure?
+insert(165,291)
+transitive closure?
+delete(165,291)
+transitive closure?
+delete(155,348)
+transitive closure?
+insert(317,350)
+transitive closure?
+delete(331,410)
+transitive closure?
+delete(144,374)
+transitive closure?
+insert(207,187)
+transitive closure?
+delete(207,187)
+transitive closure?
+delete(504,232)
+transitive closure?
+delete(317,350)
+transitive closure?
