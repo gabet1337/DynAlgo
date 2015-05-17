@@ -21,8 +21,8 @@ fit g(x) 'data/sankowski_test.dat' using ($1):($2 / (3*($1**2))) via m,n
 
 plot "data/floyd_test.dat" using 1:($2 / (3*($1**2))) title 'Floyd-Warshall' pointtype 5,\
      "data/sankowski_test.dat" using 1:($2 / (3*($1**2))) title 'Sankowski' pointtype 7,\
-     f(x) with lines title sprintf("Floyd-fit %.2fx^{%.2f}-x^{%.2f}", a,b,c),\
-     g(x) with lines title sprintf("Sankowski-fit %.5fx^{%.2f} log_2(x)", m,n)
+     f(x) with lines title sprintf("Floyd-fit %.5fx^{%.5f}-x^{%.5f}", a,b,c),\
+     g(x) with lines title sprintf("Sankowski-fit %.5fx^{%.5f} log_2(x)", m,n)
 
 
 
