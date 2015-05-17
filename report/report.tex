@@ -189,7 +189,11 @@ If $p(x_1$,...,$x_m)$ is a non-zero polynomial of degree $d$ with coefficients i
 \end{lemma}
 
 This gives us that the probability that the determinant of a random $n \times n$ matrix, $B$, modulo $p$ is at most $n/p$.
-$$Pr\left[ \det(I-B)  = 0\right] \leq \frac{n}{p} \leq \frac{1}{n^{c-1}}$$
+
+\begin{align}
+\label{error-prob}
+Pr\left[ \det(I-B)  = 0\right] \leq \frac{n}{p} \leq \frac{1}{n^{c-1}}
+\end{align}
 for a prime $p \geq n^c$.
 
 Since we are effectively calculating the adjugate matrix which consists of $n^2$ determinants of $n-1 \times n-1$ matrices we have that the probability of a false zero in one or more of them is given by:
@@ -319,8 +323,32 @@ In this section we are going to test our two algorithms on various input to test
 \subsection{Correctness}
 We tested correctness of our algorithms by computing the transitive closure on the given test data and then compare the results using the \texttt{diff} tool. It was however not feasible to compute the transitive closure on the $1000 \times 1000$ matrix using Floyd-Warshall's algorithm, but the algorithms computed the same results on the other given input data.
 
-\subsection{Running time}
+\subsection{Running time on given test data}
+We tested the algorithms' running time by running the given tests and measuring the running time. Since the number of operations vary significantly in the tests we normalized the data by dividing the running time with the number of operations, giving the running time per operation as a function of $n$. The data was fitted to $f(x) = ax^3$ and $f(x)=ax^2\log_2 x$ for Floyd-Warshall's and Sankowski's respectively.
 
+The results are depicted in figure~\ref{fig:norm-run-comb}. We see that the data can be fitted to the curves with a large constant factor.
+\begin{figure}[ht]
+\includegraphics[width=\textwidth]{images/normalized-given-data-running.png}
+\caption{Running time of the given data normalized by number of operations}
+\label{fig:norm-run-comb}
+\end{figure}
+
+\subsection{Running time}
+We wanted to tighter result than the one we were able to give from the given test data, so we constructed another experiment to test the running time of our algorithms. We set $p=2^{31}-1$ and the test was $7500$ \texttt{insert}'s, $2500$ \texttt{delete}'s uniformly distributed and a call to \texttt{transitiveClosure?} between every other operation, i.e. $10000$ \texttt{transitiveClosure?} calls. Then we let $n$ go from $10$ to $1000$ with a step size of $10$. The results was fitted similar to before. The results are depicted in figure~\ref{fig:running}.
+
+\begin{figure}[ht]
+%\includegraphics[width=\textwidth]{images/normalized-given-data-running.png}
+\caption{Running time for Floyd-Warshall's and Sankowski's respectively.}
+\label{fig:running}
+\end{figure}
+
+\subsection{Error probability}
+We experimented with the error probability introduced in Sankowski's randomized dynamic solution. The experiment counted the number of \texttt{insert} and \texttt{delete} operations possible before introducing an error into the transitive closure matrix. We did this by repeatedly filling and emptying an $100 \times 100$ matrix until the results from Floyd-Warshall's and Sankowski's solution did not match. For each prime number we repeated the experiment 10 times and averaged the result. We expect that the result is linear in the size of $p$ from equation~\ref{error-prob}.
+\begin{figure}[ht]
+%\includegraphics[width=\textwidth]{images/error-prob.png}
+\caption{Number of runs before an error}
+\label{fig:num-runs}
+\end{figure}
 
 \bibliography{references}
 \end{document}
