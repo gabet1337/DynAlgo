@@ -11,8 +11,7 @@ set grid ytics lc rgb "#bbbbbb" lw 1 lt 0
 set grid xtics lc rgb "#bbbbbb" lw 1 lt 0
 
 set key left top
-set logscale x 10
-set format x "10^{%T}"
+set format x "%.0t*10^{%T}"
 
 f(x) = (1/a**3) * x
 fit f(x) 'data/variabel_p.dat' via a
