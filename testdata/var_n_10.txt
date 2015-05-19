@@ -1,0 +1,21 @@
+init(10)
+insert(4,8)
+transitive closure?
+insert(8,4)
+transitive closure?
+insert(7,8)
+transitive closure?
+insert(8,1)
+transitive closure?
+insert(5,2)
+transitive closure?
+delete(4,8)
+transitive closure?
+delete(8,1)
+transitive closure?
+delete(5,2)
+transitive closure?
+insert(7,1)
+transitive closure?
+delete(7,1)
+transitive closure?

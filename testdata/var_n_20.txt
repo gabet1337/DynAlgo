@@ -1,0 +1,41 @@
+init(20)
+insert(10,1)
+transitive closure?
+insert(7,0)
+transitive closure?
+insert(10,5)
+transitive closure?
+insert(3,1)
+transitive closure?
+insert(7,12)
+transitive closure?
+insert(4,5)
+transitive closure?
+delete(4,5)
+transitive closure?
+delete(10,5)
+transitive closure?
+insert(4,13)
+transitive closure?
+delete(10,1)
+transitive closure?
+delete(7,0)
+transitive closure?
+insert(14,12)
+transitive closure?
+insert(13,1)
+transitive closure?
+insert(13,6)
+transitive closure?
+delete(14,12)
+transitive closure?
+insert(13,14)
+transitive closure?
+insert(11,17)
+transitive closure?
+delete(13,6)
+transitive closure?
+delete(4,13)
+transitive closure?
+delete(11,17)
+transitive closure?

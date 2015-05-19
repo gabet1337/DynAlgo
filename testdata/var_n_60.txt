@@ -1,0 +1,121 @@
+init(60)
+insert(10,59)
+transitive closure?
+insert(19,45)
+transitive closure?
+insert(0,45)
+transitive closure?
+delete(0,45)
+transitive closure?
+delete(19,45)
+transitive closure?
+delete(10,59)
+transitive closure?
+insert(47,15)
+transitive closure?
+insert(30,21)
+transitive closure?
+delete(30,21)
+transitive closure?
+insert(16,33)
+transitive closure?
+delete(16,33)
+transitive closure?
+insert(44,38)
+transitive closure?
+delete(47,15)
+transitive closure?
+insert(11,54)
+transitive closure?
+delete(44,38)
+transitive closure?
+insert(54,53)
+transitive closure?
+delete(11,54)
+transitive closure?
+delete(54,53)
+transitive closure?
+insert(6,55)
+transitive closure?
+delete(6,55)
+transitive closure?
+insert(32,13)
+transitive closure?
+delete(32,13)
+transitive closure?
+insert(44,32)
+transitive closure?
+insert(5,32)
+transitive closure?
+insert(50,40)
+transitive closure?
+delete(50,40)
+transitive closure?
+delete(5,32)
+transitive closure?
+insert(5,16)
+transitive closure?
+delete(5,16)
+transitive closure?
+insert(23,6)
+transitive closure?
+insert(31,27)
+transitive closure?
+insert(7,26)
+transitive closure?
+delete(7,26)
+transitive closure?
+insert(4,30)
+transitive closure?
+insert(53,23)
+transitive closure?
+delete(31,27)
+transitive closure?
+delete(53,23)
+transitive closure?
+delete(23,6)
+transitive closure?
+insert(31,7)
+transitive closure?
+insert(18,59)
+transitive closure?
+insert(13,39)
+transitive closure?
+delete(4,30)
+transitive closure?
+delete(13,39)
+transitive closure?
+insert(55,57)
+transitive closure?
+insert(56,59)
+transitive closure?
+insert(22,52)
+transitive closure?
+delete(55,57)
+transitive closure?
+delete(22,52)
+transitive closure?
+delete(31,7)
+transitive closure?
+delete(56,59)
+transitive closure?
+insert(59,15)
+transitive closure?
+delete(18,59)
+transitive closure?
+delete(44,32)
+transitive closure?
+delete(59,15)
+transitive closure?
+insert(18,10)
+transitive closure?
+delete(18,10)
+transitive closure?
+insert(17,26)
+transitive closure?
+delete(17,26)
+transitive closure?
+insert(14,53)
+transitive closure?
+delete(14,53)
+transitive closure?
