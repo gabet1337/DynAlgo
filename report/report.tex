@@ -345,7 +345,7 @@ We wanted to tighter result than the one we were able to give from the given tes
 \subsection{Error probability}
 We experimented with the error probability introduced in Sankowski's randomized dynamic solution. The experiment counted the number of \texttt{insert} and \texttt{delete} operations possible before introducing an error into the transitive closure matrix. We did this by repeatedly filling and emptying an $100 \times 100$ matrix until the results from Floyd-Warshall's and Sankowski's solution did not match. For each prime number we repeated the experiment 10 times and averaged the result. We expect that the result is linear in the size of $p$ from equation~\ref{error-prob}.
 \begin{figure}[ht]
-%\includegraphics[width=\textwidth]{images/error-prob.png}
+\includegraphics[width=\textwidth]{images/error-probability2.png}
 \caption{Number of runs before an error}
 \label{fig:num-runs}
 \end{figure}
