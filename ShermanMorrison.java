@@ -13,17 +13,22 @@ public class ShermanMorrison {
 	static long[][] B;
 	
 	static int n = 0;
-	static int p = 7; // (int) (2e31-1);
+	static long p; // = 17; // (int) (2e31-1);
 	
 	public static void main(String[] args) {
 		
+		int _p = (int) (2e31-1);
+		
 		args = new String[1];
-    	args[0] = "D:\\DynAlg\\changefile3.sdx";
-
+    	args[0] = "D:\\DynAlg\\changefile100.sdx";
+    	
+    	if (args.length == 2)
+    		_p = Integer.parseInt(args[1]);
+    	
 		StringBuilder sb = new StringBuilder();
 		
-		if (args.length != 1)
-        	System.out.println("Usage: Java FloydWarshall <input file>");
+		if (args.length == 0)
+        	System.out.println("Usage: Java FloydWarshall <input file> <prime p, default: 2e31-1>");
         else {
             try {
             	
@@ -51,7 +56,9 @@ public class ShermanMorrison {
             }
         }
 		
-		ShermanMorrison sm = new ShermanMorrison(sb.toString());
+		//sb = TestGenerator.genTest2(1);
+		
+		ShermanMorrison sm = new ShermanMorrison(sb.toString(), _p);
 		
 	}
 	
@@ -72,7 +79,9 @@ public class ShermanMorrison {
 		return A_inv;
 	}
 	
-	public ShermanMorrison(String cmds) {
+	public ShermanMorrison(String cmds, long _p) {
+		
+		this.p = _p;
 		
 		for (String cmd : cmds.split("\n")) {
 			if (cmd.startsWith("init")) {
@@ -93,6 +102,31 @@ public class ShermanMorrison {
 			}
 		}
 		
+		//print(A_inv);
+		
+	}
+	
+	public void command(String cmds) {
+		
+		for (String cmd : cmds.split("\n")) {
+			if (cmd.startsWith("init")) {
+				int n = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1,cmd.indexOf(")")));
+				init(n);
+			} else if (cmd.startsWith("insert")) {
+				int i = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1, cmd.indexOf(",")));
+				int j = Integer.parseInt(cmd.substring(cmd.indexOf(",")+1, cmd.indexOf(")")));
+				insert(i, j);
+			} else if (cmd.startsWith("delete")) {
+				int i = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1, cmd.indexOf(",")));
+				int j = Integer.parseInt(cmd.substring(cmd.indexOf(",")+1, cmd.indexOf(")")));
+				delete(i, j);
+			} else if (cmd.startsWith("transitive closure?")) {
+				System.out.println(transitive_closure());
+			} else {
+				throw new UnsupportedOperationException(cmd);
+			}
+		}
+
 	}
 	
 	public void init(int n) {
@@ -104,6 +138,8 @@ public class ShermanMorrison {
 		C44 = new long[n][n];
 		
 		B = random(n, n);
+		
+		//print(B);
 		
 		//print(B);
 		
@@ -119,13 +155,21 @@ public class ShermanMorrison {
 	public void insert(int i, int j) {
 		
 		long[][] a = multiply(A_inv, unit(i));
-		//long[][] a = multiply22(A_inv, i, 1);
+		//long[][] a = multiply2(A_inv, i, 1);
 		long[][] b = multiply(transpose(unit(j, B[i][j])), A_inv);
-		//long[][] b = multiply33(A_inv, j, B[i][j]);
+		//long[][] b = multiply3(A_inv, j, B[i][j]);
 		
 		A_inv = subtract(A_inv, multiply(a, b), mod(1 + multiply(b, unit(j))[0][0],p));
+		//A_inv = subtract(A_inv, multiply44(a, b), mod(1 + multiply2(b, j, 1)[0][0],p));
 		//subtract2(A_inv, multiply44(a, b), mod(1 + multiply22(b, j, 1)[0][0],p));
 		
+	}
+	
+	static Random rand = new Random(System.currentTimeMillis());
+	
+	public static long getRand() {
+		
+		return (long) mod(rand.nextLong(), p-1)+1;
 	}
 	
 	public void delete(int i, int j) {
@@ -136,7 +180,11 @@ public class ShermanMorrison {
 		//long[][] b = multiply33(A_inv, j, -1 * B[i][j]);
 		
 		A_inv = add(A_inv, multiply(a, b), mod(1 - multiply(b, unit(j))[0][0],p));
+		//A_inv = add(A_inv, multiply(a, b), mod(1 - multiply2(b, j, 1)[0][0],p));
 		//add(A_inv, multiply44(a, b), mod(1 - multiply22(b, j, 1)[0][0],p));
+		
+		//Random r = new Random();
+		B[i][j] = getRand(); // r.nextLong();
 		
 	}
 	
@@ -147,11 +195,11 @@ public class ShermanMorrison {
 	
 	// return a random m-by-n matrix with values between 0 and 1
     public static long[][] random(int m, int n) {
-    	Random r = new Random();
+    	//Random r = new Random();
         long[][] C = new long[m][n];
         for (int i = 0; i < m; i++)
             for (int j = 0; j < n; j++)
-                C[i][j] = mod(r.nextLong(), p);
+                C[i][j] = getRand(); // mod(r.nextLong(), p);
         return C;
     }
 
@@ -369,6 +417,10 @@ public class ShermanMorrison {
     }
     
     static long[][] res22;
+    
+    public long[][] getRes() {
+    	return A_inv;
+    }
     
     public static long[][] multiply22(long[][] A, int idx, long value) {
         

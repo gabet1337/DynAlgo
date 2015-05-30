@@ -24,8 +24,8 @@ public class FloydWarshall {
 	
 	public static void main(String[] args) {
 		
-		//args = new String[1];
-    	//args[0] = "D:\\DynAlg\\changefile3.sdx";
+		args = new String[1];
+    	args[0] = "D:\\DynAlg\\changefile100.sdx";
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("mode lazy\n");
@@ -100,6 +100,35 @@ public class FloydWarshall {
 		
 	}
 	
+	public void command(String cmds) {
+		
+		for (String cmd : cmds.split("\n")) {
+			if (cmd.startsWith("init")) {
+				int n = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1,cmd.indexOf(")")));
+				init(n);
+			} else if (cmd.startsWith("insert")) {
+				int i = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1, cmd.indexOf(",")));
+				int j = Integer.parseInt(cmd.substring(cmd.indexOf(",")+1, cmd.indexOf(")")));
+				insert(i, j);
+			} else if (cmd.startsWith("delete")) {
+				int i = Integer.parseInt(cmd.substring(cmd.indexOf("(")+1, cmd.indexOf(",")));
+				int j = Integer.parseInt(cmd.substring(cmd.indexOf(",")+1, cmd.indexOf(")")));
+				delete(i, j);
+			} else if (cmd.startsWith("transitive closure?")) {
+				if (isLazy)
+					transitive_closure();
+				System.out.println(numEdges);
+			} else if (cmd.startsWith("mode lazy")) {
+				isLazy = true;
+			} else if (cmd.startsWith("mode eager")) {
+				isLazy = false;
+			} else {
+				throw new UnsupportedOperationException(cmd);
+			}
+		}
+		
+	}
+	
 	public boolean[][] trans(boolean[][] T) {
 		
 		int n = t.length;
@@ -125,6 +154,10 @@ public class FloydWarshall {
 				if (R[i][j] && (i != j))
 					numEdges += 1;
 		
+	}
+	
+	public boolean[][] getRes() {
+		return R;
 	}
 	
 	public void init(int n) {
