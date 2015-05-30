@@ -334,10 +334,10 @@ The results are depicted in figure~\ref{fig:norm-run-comb}. We see that the data
 \end{figure}
 
 \subsection{Running time}
-We wanted to tighter result than the one we were able to give from the given test data, so we constructed another experiment to test the running time of our algorithms. We set $p=2^{31}-1$ and the test was $7500$ \texttt{insert}'s, $2500$ \texttt{delete}'s uniformly distributed and a call to \texttt{transitiveClosure?} between every other operation, i.e. $10000$ \texttt{transitiveClosure?} calls. Then we let $n$ go from $10$ to $1000$ with a step size of $10$. The results was fitted similar to before. The results are depicted in figure~\ref{fig:running}.
+We wanted to tighter result than the one we were able to give from the given test data, so we constructed another experiment to test the running time of our algorithms. We set $p=2^{31}-1$ and the test was $5000$ \texttt{insert}'s, $5000$ \texttt{delete}'s uniformly distributed and a call to \texttt{transitiveClosure?} between every other operation, i.e. $10000$ \texttt{transitiveClosure?} calls. Then we let $n$ go from $10$ to $300$ with a step size of $10$. The results are depicted in figure~\ref{fig:running}. It is plotted as running time per operation divided by $n^2$. This should give us a logarithmic curve for Sankowski's randomized solution and a linear curve for the solution based on Floyd-Warshall's.
 
 \begin{figure}[ht]
-%\includegraphics[width=\textwidth]{images/normalized-given-data-running.png}
+\includegraphics[width=\textwidth]{images/running-time-GOOD.png}
 \caption{Running time for Floyd-Warshall's and Sankowski's respectively.}
 \label{fig:running}
 \end{figure}
