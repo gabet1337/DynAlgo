@@ -164,7 +164,7 @@ Unfortunately we can not rely on a polynomial of degree $n$ as it could take exp
 
 \begin{itemize}
 \item{\texttt{init($n$)}: Set $A^{-1}$ = $I_n$. Note that $I_n$ is equal to $(I_n)^{-1}$. Also  initialize a matrix $B^{n \times n}$ taking uniformly random values from $\mathbb{Z}_p$ in all entries.}
-\item{\texttt{insert($i,j$)}: If edge does not already exist then let $u = e_i$ be the unit column vector of length $n$ with 1 in entry $i$. Let $v$ be the column vector of length n with all-zeroes expect from entry $j$ that takes it value from $B_{ij}$.
+\item{\texttt{insert($i,j$)}: If the edge does not already exist then let $u = e_i$ be the unit column vector of length $n$ with 1 in entry $i$. Let $v$ be the column vector of length n with all-zeroes expect from entry $j$ that takes it value from $B_{ij}$.
 Use the Sherman-Morrison formula presented in Equation~\ref{eq:ShermanMorrison} to compute the inverse $A^{-1}$.}
 \item{\texttt{delete($i,j$)}: As \texttt{delete($i,j$)} could simply be viewed as the inverse permutation of A with respect to \texttt{insert($i,j$)}, we change the signs in the Sherman-Morrison formula as follows
 
@@ -175,13 +175,13 @@ Assuming $u$, $v$ on the same form as in \texttt{insert($i,j$)}, we are ensured 
 We only delete if the edge has previously been inserted.
 }
 
-\item{\texttt{transitiveClosure?}: From Theorem~\ref{thrm:sankowski-path} it follows that we just have to report all non-zero entries of $A^{-1}$.}
+\item{\texttt{transitiveClosure?}: From Theorem~\ref{thrm:sankowski-path} it follows that we just have to report with respect to all non-zero entries of $A^{-1}$.}
 \end{itemize}
 
 \subsection{Probability of errors}
 
-Conceptually we want to store a matrix of unique symbols and then the determinant of this matrix would be a polynomial of degree $\leq n$ in at most $n^2$ variables. The symbolic determinant stored would be symbolically equal to zero iff there is no edge from $i$ to $j$. Since all variables are distinct we have that none of the permutation terms can cancel out, and we would be home-free. We can however not afford to evaluate these polynomials so we have to settle for a random matrix modulo a prime $p$.
-This introduces so-called false zeros. The determinant of the $n \times n$ random matrix can be seen as a polynomial of degree $\leq n$. The probability of a false zero is bounded in the following lemma ~\ref{lma:zippelSchwarz}.
+Conceptually we want to store a matrix of unique symbols and then the determinant of this matrix would be a polynomial of degree $\leq n$ in at most $n^2$ variables. The symbolic determinant stored would be symbolically equal to zero iff there is no edge from $i$ to $j$. Since all variables are distinct we are ensured that none of the permutation terms can cancel out, and we would have achieved a working solution. We can, however, not afford to evaluate these polynomials so we have to settle for a random matrix modulo a prime $p$.
+This introduces so-called false zeros. The determinant of the $n \times n$ random matrix can be seen as a polynomial of degree $\leq n$. The probability of a false zero is bounded in the following lemma ~\ref{lma:zippelSchwarz} due to Schwartz–Zippel~\cite{Reif1997347}.
 
 \begin{lemma}
 \label{lma:zippelSchwarz}
@@ -231,18 +231,17 @@ Operation & Normal initialization & Lazy initialization \\\hline
 \label{fig:truly-comp}
 \end{figure}
 
-\chapter{Implementation}
-\label{impl}
+%\chapter{Implementation}
+%\label{impl}
 
-We implemented both dynamic algorithms described in section~\ref{chap:fw} and section~\ref{chap:sankowski}. For the prime needed in the algorithm described in section~\ref{chap:sankowski}, we used $p = 2^{31}-1$ as it has the advantage that we can do all operations within double precision arithmetic.
-
+%We implemented both dynamic algorithms described in section~\ref{chap:fw} and section~\ref{chap:sankowski}. For the prime needed in the algorithm described in section~\ref{chap:sankowski}, we used $p = 2^{31}-1$ as it has the advantage that we can do all operations within double precision arithmetic.
 
 
 \chapter{Arithmetic modulo $p$}
 \label{chap:prime}
-In order to achieve the bounds presented in section~\ref{chap:sankowski} we need to be able to do fast arithmetic operations modulo $p$. There we used that the operations can be performed in $\mathcal{O}(\log^2(p))$. This is trivially true for all operations except division, since they are simply the normal operation followed by a modulo operation.
+In order to achieve the bounds presented in section~\ref{chap:sankowski} we need to be able to do fast arithmetic operations modulo $p$. There we assumed that the operations can be performed in $\mathcal{O}(\log^2(p))$. This is trivially true for all operations except division, since they are simply the normal operation followed by a modulo operation.
 
-We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to compute the multiplicative inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the multiplicative inverse can be computed in $\mathcal{O}(\log^2(p))$. We will do this using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$ since $py = 0$ in the field. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
+We cannot use normal algebraic division when in $\mathbb{Z}/p\mathbb{Z}$. Instead we need to compute the multiplicative inverse of the denominator and multiply this with the numerator modulo $p$. We need to show that the multiplicative inverse can be computed in $\mathcal{O}(\log^2(p))$. We will do this using the extended euclidean algorithm. In addition to computing the greatest common divisor $d$ of $a$ and $b$, the extended euclidean algorithm also computes $x$ and $y$ such that $d = ax+by$ (Bézout's identity). If we compute this identity with $b = p$ we have that $1 = ax+py$, since the greatest common divisor of $a$ and $p$ will always be $1$ in the field $\mathbb{Z}/p\mathbb{Z}$, i.e. all elements have an inverse. Now the modular inverse of $a$ is simply $x$ modulo $p$ since $py = 0$ in the field. Lets sum up these results in algorithm~\ref{alg:modinv} for computing the modular inverse modulo $p$.
 
 %algorithm
 \begin{algorithm}[H]
@@ -273,7 +272,7 @@ We cannot just use normal division when in $\mathbb{Z}/p\mathbb{Z}$. We need to 
 \end{algorithmic}
 \end{algorithm}
 
-We see that the complexity is bounded by the complexity of computing the greatest common divisor in the extended euclidean algorithm.
+We note that the complexity is bounded by the complexity of computing the greatest common divisor in the extended euclidean algorithm.
 
 \subsection{The running time of the Extended Euclidean algorithm}
 The running time of this algorithm is equal to the number of recursive calls we make. The worst case analysis makes use of Fibonacci numbers, since calculating the greatest common divisor of two consecutive Fibonacci numbers will produce the worst case number of recursive calls.
@@ -320,13 +319,24 @@ Since $F_k = \Theta(\phi^k)$ where $\phi$ is the golden ratio we have that the n
 \label{chap:exp}
 In this section we are going to test our two algorithms on various input to test the correctness and running time under different conditions.
 
+\subsection{Methodology and implementation details}
+The experiments were performed on a machine with a Intel i7 @ 2.6GHz with 64K bytes of L1 cache, 256K bytes of L2 and 6144K bytes of L3 cache. The machine had 5.6GB ram and ran Ubuntu 14.04 with kernel version 3.16.0-30.
+
+We implemented both dynamic algorithms described in section~\ref{chap:fw} and section~\ref{chap:sankowski} in C++ and Java. For the prime needed in the algorithm described in section~\ref{chap:sankowski}, we used $p = 2^{31}-1$ as it has the advantage that we can do all operations within double precision arithmetic.
+
+In C++ random elements were generated uniformly in the integer range [1,...,p-1] using the Mersenne Twister 19937 from the \texttt{random} library.
+
+The C++ code is compiled with \texttt{g++ 4.8.2} with optimization level 3 and the \texttt{c++11} standard enabled.
+
+The Java code is compiled with \texttt{java 1.8.0\_25-b18} 64bit with VM arguments -Xms512M -Xmx1200M as to be able to achieve a heap size that allows for large input to be tested.
+
 \subsection{Correctness}
-We tested correctness of our algorithms by computing the transitive closure on the given test data and then compare the results using the \texttt{diff} tool. It was however not feasible to compute the transitive closure on the $1000 \times 1000$ matrix using Floyd-Warshall's algorithm, but the algorithms computed the same results on the other given input data.
+We tested correctness of our algorithms in both C++ and Java by computing the transitive closure on the given test data and then compare the results using the \texttt{diff} tool. It was however not feasible to compute the transitive closure on the $1000 \times 1000$ matrix using Floyd-Warshall's algorithm, but the algorithms computed the same results on the other given input data.
 
 \subsection{Running time on given test data}
 We tested the algorithms' running time by running the given tests and measuring the running time. Since the number of operations vary significantly in the tests we normalized the data by dividing the running time with the number of operations, giving the running time per operation as a function of $n$. The data was fitted to $f(x) = ax^3$ and $f(x)=ax^2\log_2 x$ for Floyd-Warshall's and Sankowski's respectively.
 
-The results are depicted in figure~\ref{fig:norm-run-comb}. We see that the data can be fitted to the curves with a large constant factor.
+The results for our C++ implementation are depicted in figure~\ref{fig:norm-run-comb}. We see that the data can be fitted to the curves with a large constant factor.
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{images/normalized-given-data-running.png}
 \caption{Running time of the given data normalized by number of operations}
@@ -334,7 +344,7 @@ The results are depicted in figure~\ref{fig:norm-run-comb}. We see that the data
 \end{figure}
 
 \subsection{Running time}
-We wanted to tighter result than the one we were able to give from the given test data, so we constructed another experiment to test the running time of our algorithms. We set $p=2^{31}-1$ and the test was $5000$ \texttt{insert}'s, $5000$ \texttt{delete}'s uniformly distributed and a call to \texttt{transitiveClosure?} between every other operation, i.e. $10000$ \texttt{transitiveClosure?} calls. Then we let $n$ go from $10$ to $300$ with a step size of $10$. The results are depicted in figure~\ref{fig:running}. It is plotted as running time per operation divided by $n^2$. This should give us a logarithmic curve for Sankowski's randomized solution and a linear curve for the solution based on Floyd-Warshall's.
+In order to achieve tighter result than the one we were able to give from the given test data, we constructed another experiment to test the running time of our algorithms. We set $p=2^{31}-1$ and the test was $5000$ \texttt{insert}'s, $5000$ \texttt{delete}'s uniformly distributed and a call to \texttt{transitiveClosure?} between every other operation, i.e. $10000$ \texttt{transitiveClosure?} calls. Then we let $n$ go from $10$ to $300$ with a step size of $10$. The results from our C++ implementation are depicted in figure~\ref{fig:running}. It is plotted as running time per operation divided by $n^2$. This should give us a logarithmic curve for Sankowski's randomized solution and a linear curve for the solution based on Floyd-Warshall's.
 
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{images/running-time-GOOD.png}
@@ -343,7 +353,7 @@ We wanted to tighter result than the one we were able to give from the given tes
 \end{figure}
 
 \subsection{Error probability}
-We experimented with the error probability introduced in Sankowski's randomized dynamic solution. The experiment counted the number of \texttt{insert} and \texttt{delete} operations possible before introducing an error into the transitive closure matrix. We did this by repeatedly filling and emptying an $100 \times 100$ matrix until the results from Floyd-Warshall's and Sankowski's solution did not match. For each prime number we repeated the experiment 10 times and averaged the result. We expect that the result is linear in the size of $p$ from equation~\ref{error-prob}.
+We experimented with the error probability introduced in Sankowski's randomized dynamic solution. The experiment counted the number of \texttt{insert} and \texttt{delete} operations possible before introducing an error into the transitive closure matrix. We did this by repeatedly filling and emptying an $30 \times 30$ matrix until the results from Floyd-Warshall's and Sankowski's solution did not match. For each prime number we repeated the experiment 50 times and averaged the result. We expect that the result is linear in the size of $p$ from equation~\ref{error-prob}. The results from our Java implementation are repeated in~\ref{fig:num-runs}.
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{images/error-probability2.png}
 \caption{Number of runs before an error}
