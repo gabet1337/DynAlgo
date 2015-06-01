@@ -334,9 +334,9 @@ The Java code is compiled with \texttt{java 1.8.0\_25-b18} 64bit with VM argumen
 We tested correctness of our algorithms in both C++ and Java by computing the transitive closure on the given test data and then compare the results using the \texttt{diff} tool. It was however not feasible to compute the transitive closure on the $1000 \times 1000$ matrix using Floyd-Warshall's algorithm, but the algorithms computed the same results on the other given input data.
 
 \subsection{Running time on given test data}
-We tested the algorithms' running time by running the given tests and measuring the running time. Since the number of operations vary significantly in the tests we normalized the data by dividing the running time with the number of operations, giving the running time per operation as a function of $n$. The data was fitted to $f(x) = ax^3$ and $f(x)=ax^2\log_2 x$ for Floyd-Warshall's and Sankowski's respectively.
+We tested the algorithms' running time by running the given tests and measuring the running time. Since the number of operations vary significantly in the tests we normalized the data by dividing the running time with the number of operations, giving the running time per operation as a function of $n$. The data was fitted to $f(x) = ax^3$ and $f(x)=ax^2\log^2_2 x$ for Floyd-Warshall's and Sankowski's respectively.
 
-The results for our C++ implementation are depicted in figure~\ref{fig:norm-run-comb}. We see that the data can be fitted to the curves with a large constant factor.
+The results for our C++ implementation are depicted in figure~\ref{fig:norm-run-comb}. We see that the data can be fitted to the curves with a small constant factor.
 \begin{figure}[ht]
 \includegraphics[width=\textwidth]{images/normalized-given-data-running.png}
 \caption{Running time of the given data normalized by number of operations}
@@ -359,6 +359,11 @@ We experimented with the error probability introduced in Sankowski's randomized 
 \caption{Number of runs before an error}
 \label{fig:num-runs}
 \end{figure}
+
+\chapter{Conclusion}
+We implemented two algorithms for solving the dynamic transitive closure problem. A solution based on Floyd-Warshall's algorithm for all pairs shortest path, and another solution based on Sankowski's randomized reduction from matrix adjoint.
+In our experiments we verified that Sankowski's solution is indeed a lot faster than the trivial solution on our test data. We verified that Floyd-Warshall's solution runs in $\mathcal{O}(n^3)$ and Sankowski's solution in $\mathcal{O}(n^2\log^2 n)$.
+Finally we also verified that the error probability of the randomized solution is linear in the size of $p$.
 
 \bibliography{references}
 \end{document}
